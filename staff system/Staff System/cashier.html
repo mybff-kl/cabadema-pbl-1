@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNLTD 199 | Cashier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cashier.css">
+  <link rel="stylesheet" href="cashier-responsive.css">
+</head>
+<body class="auth-pending">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="icon-btn on-dark" id="menuBtn" type="button" aria-label="Open menu"><i data-icon="menu"></i></button>
+      <h1>UNLTD 199 Samgyupsal Korean Grill House</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="clock-pill"><i data-icon="clock"></i><span id="clock">--:--:-- --</span></div>
+      <div class="user-chip"><i data-icon="user"></i><span id="userName">Hi, Pierce!</span></div>
+    </div>
+  </header>
+
+  <!-- Sidebar drawer (same look as Front Desk) -->
+  <div class="drawer-overlay" id="drawerScrim" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Menu" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-name">UNLTD 199</div>
+        <div class="drawer-role">Cashier Portal</div>
+      </div>
+      <button class="icon-btn on-dark" id="drawerClose" type="button" aria-label="Close menu"><i data-icon="x"></i></button>
+    </div>
+    <ul class="drawer-list">
+      <li>
+        <button class="drawer-item drawer-item--active" type="button" data-scroll="queueSection">
+          <i data-icon="receipt"></i>Bill requests
+        </button>
+      </li>
+    </ul>
+    <ul class="drawer-list drawer-list--bottom">
+      <li>
+        <button class="drawer-item" id="drawerLogout" type="button">
+          <i data-icon="logout"></i>Log out
+        </button>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="page">
+    <div class="page-title">
+      <div class="title-badge"><i data-icon="receipt"></i></div>
+      <div>
+        <h2>Bills and Payments</h2>
+        <p>Tap a table to review the bill and collect payment.</p>
+      </div>
+    </div>
+
+    <section class="card" id="queueSection">
+      <div class="card-head">
+        <div class="card-title"><i data-icon="receipt"></i><h3>Bill requests</h3></div>
+        <span class="count-pill" id="queueCount">0 waiting</span>
+      </div>
+      <div class="bill-grid" id="billGrid"></div>
+    </section>
+  </main>
+
+  <!-- Payment modal -->
+  <div class="overlay" id="payOverlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="payTitle">Table</h3>
+          <p id="paySub"></p>
+        </div>
+        <button class="icon-btn" type="button" data-close="pay" aria-label="Close"><i data-icon="x"></i></button>
+      </div>
+      <div class="modal-body" id="payBody"></div>
+      <div class="modal-foot">
+        <div class="foot-total"><span>Total due</span><strong id="payTotal">₱0.00</strong></div>
+        <button class="btn primary" id="confirmPayBtn" type="button"><i data-icon="check"></i>Confirm payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt modal -->
+  <div class="overlay" id="receiptOverlay" hidden>
+    <div class="modal narrow" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="receiptTitle">Digital receipt</h3>
+          <p id="receiptSub"></p>
+        </div>
+        <button class="icon-btn" type="button" data-close="receipt" aria-label="Close"><i data-icon="x"></i></button>
+      </div>
+      <div class="modal-body receipt-wrap" id="receiptBody"></div>
+      <div class="modal-foot">
+        <button class="btn secondary" id="printBtn" type="button"><i data-icon="printer"></i>Print receipt</button>
+        <button class="btn primary" id="doneBtn" type="button"><i data-icon="check"></i>Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation dialog -->
+  <div class="overlay overlay-top" id="confirmOverlay" hidden>
+    <div class="modal dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMsg">
+      <div class="dialog-ic" id="confirmIcon"></div>
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmMsg"></p>
+      <div class="dialog-actions">
+        <button class="btn secondary" id="confirmCancel" type="button">Cancel</button>
+        <button class="btn primary" id="confirmOk" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <div id="printArea" aria-hidden="true"></div>
+
+  <script src="cashier.js"></script>
+</body>
+</html>

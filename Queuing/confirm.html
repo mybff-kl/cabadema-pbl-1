@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 - Confirm Party Size</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+
+  <!-- SCREEN 2: Confirm the number of people dining -->
+  <main class="kiosk-screen">
+
+    <div class="logo-area">
+      <img class="logo-image" src="logo.png" alt="UNLTD 199 Samgyupsal Korean Grill House">
+      <div class="logo-fallback">UNLTD 199<small>Samgyupsal Korean Grill House</small></div>
+    </div>
+
+    <h1 class="screen-title">Please confirm the number of people dining.</h1>
+
+    <section class="card confirm-card">
+      <!-- Dark header bar: change the text here -->
+      <div class="card-header">Number of People Dining</div>
+
+      <div class="card-body">
+        <!-- The number is filled in by script.js -->
+        <div class="confirm-number" id="confirm-number">0</div>
+        <div class="confirm-label" id="confirm-label">people</div>
+      </div>
+    </section>
+
+    <div class="button-row">
+      <button class="button button--outline" id="cancel-button">Cancel</button>
+      <button class="button button--primary" id="confirm-button">Confirm</button>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

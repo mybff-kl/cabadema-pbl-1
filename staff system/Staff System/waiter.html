@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 | Waiter </title>
+
+  <script>
+    try {
+      if (sessionStorage.getItem("waiterLoggedIn") !== "yes") { window.location.replace("login.html"); }
+    } catch (e) { window.location.replace("login.html"); }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="waiter.css">
+  <link rel="stylesheet" href="waiter-responsive.css">
+</head>
+<body class="fd-page">
+
+  <!-- ICON SPRITE -->
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M7.8 12.3l3 3 5.5-6"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="icon-logout" viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15zM10 21h4"/></symbol>
+    <symbol id="icon-utensils" viewBox="0 0 24 24"><path d="M18 2v6a3 3 0 0 1-3 3v9M15 2v9M6 2v6a3 3 0 0 0 3 3v9M9 2v9M6 14h6"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </svg>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <button type="button" class="icon-button" id="menu-button" aria-label="Open menu">
+      <svg class="icon"><use href="#icon-menu"></use></svg>
+    </button>
+    <div class="topbar-title">
+      <h1>UNLTD 199 Samgyupsal Korean Grill House</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-clock">
+        <svg class="icon"><use href="#icon-clock"></use></svg>
+        <span id="topbar-clock">00:00:00</span>
+      </div>
+      <div class="topbar-user">
+        <svg class="icon"><use href="#icon-user"></use></svg>
+        <span>Hi, Kaiya!</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <nav class="drawer" id="drawer" aria-label="Waiter menu" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <p class="drawer-name">UNLTD 199</p>
+        <p class="drawer-role">Waiter Portal</p>
+      </div>
+      <button type="button" class="icon-button" id="drawer-close-button" aria-label="Close menu">
+        <svg class="icon"><use href="#icon-close"></use></svg>
+      </button>
+    </div>
+    <ul class="drawer-list">
+      <li><button type="button" class="drawer-item drawer-item--active" id="orders-nav-button"><svg class="icon"><use href="#icon-utensils"></use></svg>Orders and Assistance</button></li>
+    </ul>
+    <ul class="drawer-list drawer-list--bottom">
+      <li><button type="button" class="drawer-item" id="logout-button"><svg class="icon"><use href="#icon-logout"></use></svg>Log out</button></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <div class="page-head">
+      <div class="page-icon"><svg class="icon"><use href="#icon-utensils"></use></svg></div>
+      <div>
+        <h2>Orders and Assistance</h2>
+        <p>Serve add-on orders and respond to tables that need help.</p>
+      </div>
+    </div>
+
+    <div class="two-column two-column--wide-left">
+      <section class="panel">
+        <div class="panel-head">
+          <div class="panel-title"><svg class="icon"><use href="#icon-utensils"></use></svg>Add-ons Orders</div>
+          <span class="pill" id="addons-count">0 orders</span>
+        </div>
+        <p class="panel-hint">Here are the customer's requested additional items.</p>
+        <div id="addons-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div class="panel-title"><svg class="icon"><use href="#icon-bell"></use></svg>Tables Needing Assistance</div>
+          <span class="pill" id="assistance-count">0 tables</span>
+        </div>
+        <p class="panel-hint">Staff assistance is requested for these tables.</p>
+        <div id="assistance-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="modal-overlay" hidden>
+
+    <!-- View orders -->
+    <section class="modal modal--wide" id="modal-view-orders" role="dialog" aria-modal="true" hidden>
+      <div class="modal-bar modal-bar--fd">
+        <svg class="icon"><use href="#icon-utensils"></use></svg>
+        <span id="modal-table-title">Table 1 (4 pax)</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--left">
+        <h3 class="modal-title modal-title--left">Order Details</h3>
+        <div class="order-items" id="modal-order-items-list"></div>
+
+        <div class="summary-bar">
+          <div class="summary-info">
+            <div class="summary-icon"><svg class="icon"><use href="#icon-utensils"></use></svg></div>
+            <div>
+              <p class="summary-label">Total Items</p>
+              <p class="summary-value" id="modal-total-items">2</p>
+            </div>
+          </div>
+          <button type="button" class="button button--primary button--small" id="modal-mark-done-btn"><svg class="icon"><use href="#icon-check"></use></svg>Mark as Done</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm order done -->
+    <section class="modal" id="modal-confirm-done" role="dialog" aria-modal="true" hidden>
+      <div class="modal-bar modal-bar--fd">
+        <svg class="icon"><use href="#icon-check"></use></svg>
+        <span>Mark Order as Done</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-check"></use></svg></div>
+        <h2 class="modal-title">Mark this table’s order as done?</h2>
+        <p class="modal-text">This will close the current order and remove it from the list.</p>
+        <div class="preview-box" id="confirm-done-preview"></div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" id="confirm-done-back">Cancel</button>
+          <button type="button" class="button button--primary" id="confirm-done-yes">Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Remove item -->
+    <section class="modal" id="modal-remove-item" role="dialog" aria-modal="true" hidden>
+      <div class="modal-bar modal-bar--fd modal-bar--danger">
+        <svg class="icon"><use href="#icon-trash"></use></svg>
+        <span>Remove Item</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--left">
+        <p class="modal-text modal-text--left">Are you sure you want to remove this item from the order?</p>
+        <div class="preview-box" id="remove-item-preview"></div>
+
+        <p class="field-label">Reason for Removal</p>
+        <div class="choice-list">
+          <label class="choice"><input type="radio" name="removal-reason" value="Sold Out" checked> Sold Out</label>
+          <label class="choice"><input type="radio" name="removal-reason" value="Not Available"> Not Available</label>
+        </div>
+
+        <p class="field-label">Additional Note (optional)</p>
+        <textarea class="textarea" id="removal-note" placeholder="e.g., Out of stock, supplier issue, etc."></textarea>
+
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="confirm-remove-item-btn">Remove</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Log out -->
+    <section class="modal" id="modal-confirm-logout" role="dialog" aria-modal="true" hidden>
+      <div class="modal-bar modal-bar--fd modal-bar--danger">
+        <svg class="icon"><use href="#icon-logout"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-logout"></use></svg></div>
+        <h2 class="modal-title">Log out?</h2>
+        <p class="modal-text">Are you sure you want to sign out?</p>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="confirm-logout-yes">Log out</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resolve assistance -->
+    <section class="modal" id="modal-confirm-assistance" role="dialog" aria-modal="true" hidden>
+      <div class="modal-bar modal-bar--fd">
+        <svg class="icon"><use href="#icon-bell"></use></svg>
+        <span>Resolve Assistance</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-bell"></use></svg></div>
+        <h2 class="modal-title">Mark assistance as done?</h2>
+        <p class="modal-text">This will clear the assistance request alert for this table.</p>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--primary" id="confirm-assistance-yes">Confirm</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script src="common.js"></script>
+  <script src="waiter.js"></script>
+</body>
+</html>

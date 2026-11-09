@@ -1,0 +1,44 @@
+/* =====================================================
+   UNLTD 199 - Front Desk Login
+   RESPONSIVE STYLES
+   -----------------------------------------------------
+   Loaded AFTER login.css, so these rules override it.
+   Tablet: up to 900px wide
+   Phone:  up to 600px wide
+   ===================================================== */
+
+
+/* ---------- TABLET ---------- */
+@media (max-width: 900px) {
+  .login-logo {
+    height: clamp(150px, 28vh, 280px);
+  }
+
+  .login-title {
+    font-size: 2.2rem;
+  }
+}
+
+
+/* ---------- PHONE ---------- */
+@media (max-width: 600px) {
+  .login-screen {
+    padding: 16px 16px 32px;
+  }
+
+  .login-logo {
+    height: 150px;
+  }
+
+  .login-title {
+    font-size: 2rem;
+  }
+
+  .login-subtitle {
+    margin-bottom: 24px;
+  }
+
+  .modal-body {
+    padding: 24px 20px;
+  }
+}

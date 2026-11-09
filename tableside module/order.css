@@ -1,0 +1,950 @@
+/* =====================================================
+   UNLTD 199 - Customer Order Screen
+   MAIN STYLESHEET (used by order.html)
+   -----------------------------------------------------
+   1. Colors and settings (EDIT COLORS HERE)
+   2. Base
+   3. Icons
+   4. Top bar
+   5. Side menu
+   6. Menu screen (tabs, search, item cards)
+   7. Panels (My Orders and Bill Out)
+   8. Bill Out screen
+   9. Buttons
+   10. Pop-ups (modals)
+   11. Toast message
+   ===================================================== */
+
+
+/* =====================================================
+   1. COLORS AND SETTINGS
+   Change a color here and it updates everywhere.
+   ===================================================== */
+:root {
+  /* Dark red-brown used by the top bar and side menu */
+  --color-dark: #6b2116;
+  --color-nav-active: #93402b;
+
+  /* Main brand colors */
+  --color-primary: #9b4733;        /* headings, selected tab */
+  --color-button: #b05a3c;         /* main buttons */
+  --color-button-hover: #96472c;
+  --color-orange: #f06a2e;         /* the "199" in the logo */
+
+  /* Backgrounds */
+  --color-page: #fdf4e4;           /* page behind everything */
+  --color-panel: #fffaf0;          /* big white-cream boxes */
+  --color-white: #ffffff;
+  --color-beige: #ecd9c3;          /* table header bars */
+  --color-peach: #fbe9dd;          /* note boxes, image boxes */
+  --color-border: #e6d3bd;
+
+  /* Text */
+  --color-text-dark: #2a1a14;
+  --color-text-muted: #8a7468;
+
+  /* Font */
+  --font-main: "Inter", "Segoe UI", Arial, sans-serif;
+
+  /* Sizes and spacing */
+  --topbar-height: 72px;
+  --sidebar-width: 108px;
+  --radius-small: 8px;
+  --radius-medium: 12px;
+  --radius-large: 16px;
+  --space-small: 12px;
+  --space-medium: 20px;
+  --space-large: 32px;
+
+  --shadow-soft: 0 2px 8px rgba(90, 40, 20, 0.18);
+}
+
+/* Makes the "hidden" attribute always work */
+[hidden] {
+  display: none !important;
+}
+
+
+/* =====================================================
+   2. BASE
+   ===================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-page);
+  color: var(--color-text-dark);
+  overflow-x: hidden; /* stops sideways scrolling */
+
+  /* TABLET TOUCH SETTINGS: no double-tap zoom, no grey flash when tapping */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  min-width: 0; /* lets the content shrink on small screens */
+  padding: var(--space-medium) var(--space-large) var(--space-large);
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-large) 0;
+}
+
+
+/* =====================================================
+   3. ICONS
+   ===================================================== */
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon--large {
+  width: 1.9em;
+  height: 1.9em;
+}
+
+.icon--huge {
+  width: 72px;
+  height: 72px;
+}
+
+
+/* =====================================================
+   4. TOP BAR
+   ===================================================== */
+.topbar {
+  height: var(--topbar-height);
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-medium);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-flame {
+  width: 44px;   /* flame size: make this bigger or smaller */
+  height: 52px;
+  color: var(--color-orange);
+}
+
+.brand-name {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.brand-name span {
+  color: var(--color-orange);
+}
+
+.brand-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.3px;
+  opacity: 0.85;
+}
+
+.topbar-info {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 1rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.info-divider {
+  width: 1px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.timer-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.timer-text strong {
+  font-size: 1.2rem;
+}
+
+.timer-text small {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+
+/* Timer colors: yellow when time is almost up, red when it is over */
+.info-item--timer.timer--warning strong {
+  color: #ffd27a;
+}
+
+.info-item--timer.timer--over strong {
+  color: #ff9a8a;
+}
+
+
+/* =====================================================
+   5. SIDE MENU
+   ===================================================== */
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background-color: var(--color-dark);
+  padding-top: 8px;
+}
+
+.nav-button {
+  width: 100%;
+  padding: 22px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.nav-button .icon {
+  width: 34px;
+  height: 34px;
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-button--active {
+  background-color: var(--color-nav-active);
+  color: var(--color-white);
+}
+
+
+/* =====================================================
+   6. MENU SCREEN
+   ===================================================== */
+.menu-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+}
+
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 10px 22px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-primary);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.category-tab:hover {
+  background-color: var(--color-peach);
+}
+
+.category-tab--active,
+.category-tab--active:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 320px;
+  max-width: 100%;
+}
+
+.search-box .icon {
+  position: absolute;
+  left: 12px;
+  color: var(--color-text-muted);
+}
+
+.search-box input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px 12px 44px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  color: var(--color-text-dark);
+}
+
+.search-box input:focus {
+  outline: 2px solid var(--color-button);
+  outline-offset: 1px;
+}
+
+/* ----- Item cards ----- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-medium);
+  margin-top: var(--space-medium);
+}
+
+.menu-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-medium);
+  padding: 14px;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+/* Lift effect only for mouse users; tablets get a press effect instead */
+@media (hover: hover) {
+  .menu-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 40, 20, 0.25);
+  }
+}
+
+.menu-card:active {
+  transform: scale(0.98);
+}
+
+/* Box that holds a food picture (or an emoji if the picture is missing) */
+.item-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-page);
+  border-radius: var(--radius-small);
+  overflow: hidden;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-emoji {
+  font-size: 3rem;
+}
+
+.item-image--card {
+  aspect-ratio: 16/9;
+}
+
+.item-image--modal {
+  aspect-ratio: 16/9;
+}
+
+.item-image--thumb {
+  width: 56px;
+  height: 56px;
+}
+
+.item-image--thumb .item-emoji {
+  font-size: 1.5rem;
+}
+
+.menu-card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.menu-card-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.menu-card-price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.add-button {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-dark);
+  border: none;
+  border-radius: 50%;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.add-button:hover {
+  background-color: var(--color-button);
+}
+
+
+/* =====================================================
+   7. PANELS (My Orders and Bill Out)
+   ===================================================== */
+.panel {
+  max-width: 1100px;
+  margin: 0 auto;
+  background-color: var(--color-panel);
+  border-radius: var(--radius-large);
+  padding: var(--space-medium) var(--space-large) var(--space-large);
+  box-shadow: var(--shadow-soft);
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-medium);
+}
+
+.panel-title--small {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.panel-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-medium);
+}
+
+/* Table header bar and rows (My Orders) */
+.orders-row {
+  display: grid;
+  grid-template-columns: 2.4fr 0.6fr 1fr 0.8fr 0.9fr;
+  align-items: center;
+  gap: var(--space-small);
+  padding: 12px 16px;
+  font-size: 1rem;
+}
+
+.orders-row--head {
+  background-color: var(--color-beige);
+  border-radius: var(--radius-small);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.orders-row--item {
+  margin-top: 8px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-soft);
+}
+
+.cell-center {
+  text-align: center;
+}
+
+.item-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.item-cell-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.item-cell-sub {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.status-label {
+  display: inline-block;
+  padding: 3px 10px;
+  background-color: var(--color-peach);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+}
+
+/* Total row */
+.total-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-small);
+  padding: 14px 16px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.total-box--plain {
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  padding: 12px 8px 0;
+  margin-top: var(--space-small);
+}
+
+/* =====================================================
+   8. BILL OUT SCREEN
+   ===================================================== */
+.bill-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-medium);
+  color: var(--color-primary);
+}
+
+.bill-heading .panel-title {
+  color: var(--color-text-dark);
+}
+
+.bill-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--space-medium);
+  align-items: start;
+}
+
+.bill-box {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-medium);
+}
+
+.box-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  margin-bottom: var(--space-small);
+}
+
+.bill-row {
+  display: grid;
+  grid-template-columns: 2fr 0.6fr 1fr;
+  align-items: center;
+  gap: var(--space-small);
+  padding: 10px 10px;
+  font-size: 0.95rem;
+}
+
+.bill-row--head {
+  background-color: var(--color-beige);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.bill-row--item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.payment-options {
+  display: flex;
+  gap: 10px;
+}
+
+.payment-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 12px;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-small);
+  color: var(--color-text-muted);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+/* Cash Option - Green Styling */
+.payment-option--cash:hover {
+  background-color: #e8f5e9;
+  border-color: #2e7d32;
+  color: #2e7d32;
+}
+
+.payment-option--cash.payment-option--selected,
+.payment-option--cash.payment-option--selected:hover {
+  background-color: #e8f5e9;
+  border-color: #2e7d32;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+/* GCash Option - Blue Styling */
+.payment-option--gcash:hover {
+  background-color: #e3f2fd;
+  border-color: #007cff;
+  color: #007cff;
+}
+
+.payment-option--gcash.payment-option--selected,
+.payment-option--gcash.payment-option--selected:hover {
+  background-color: #e3f2fd;
+  border-color: #007cff;
+  color: #0056b3;
+  font-weight: 700;
+}
+
+.payment-note {
+  display: flex;
+  gap: 10px;
+  margin-top: var(--space-small);
+  padding: 16px;
+  background-color: var(--color-peach);
+  border-radius: var(--radius-small);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* =====================================================
+   9. BUTTONS
+   ===================================================== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 14px 32px;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button--primary {
+  background-color: var(--color-button);
+  color: var(--color-white);
+}
+
+.button--primary:hover {
+  background-color: var(--color-button-hover);
+}
+
+.button--outline {
+  background-color: var(--color-white);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.button--outline:hover {
+  background-color: var(--color-peach);
+}
+
+.button--full {
+  width: 100%;
+  margin-top: var(--space-medium);
+}
+
+
+/* =====================================================
+   10. POP-UPS (MODALS)
+   ===================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-medium);
+  background-color: rgba(70, 25, 15, 0.45);
+  backdrop-filter: blur(6px); /* blurs the page behind the pop-up */
+}
+
+.modal {
+  width: 100%;
+  max-width: 580px;
+  background-color: var(--color-panel);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Dark strip at the top of a pop-up */
+.modal-bar {
+  height: 28px;
+  background-color: var(--color-dark);
+}
+
+.modal-body {
+  padding: var(--space-large);
+}
+
+.modal-body--center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  color: var(--color-dark);
+}
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.modal-text {
+  max-width: 400px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text-dark);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: var(--space-medium);
+}
+
+.modal-buttons .button {
+  min-width: 160px;
+}
+
+.burst-icon {
+  width: 150px;
+  height: 80px;
+  color: var(--color-primary);
+}
+
+/* ----- Select item pop-up ----- */
+.item-preview {
+  width: 240px;
+  margin: 0 auto;
+  padding: 14px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+}
+
+.item-preview-name {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.item-preview-price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.quantity-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-medium);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stepper button {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.stepper button:hover {
+  background-color: var(--color-peach);
+}
+
+.stepper input {
+  width: 90px;
+  height: 52px;
+  text-align: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 1.3rem;
+  font-weight: 600;
+  -moz-appearance: textfield;
+}
+
+/* Hide the little up/down arrows inside the number box */
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* =====================================================
+   11. TOAST MESSAGE
+   ===================================================== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 60;
+  max-width: 90%;
+  padding: 12px 24px;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border-radius: var(--radius-small);
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.toast.toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* =====================================================
+   12. TIME-UP STATE (added for the dining time limit)
+   ===================================================== */
+
+/* Message above the menu when ordering is closed */
+.closed-banner {
+  margin-top: var(--space-medium);
+  margin-bottom: var(--space-medium);
+  padding: 14px 18px;
+  background-color: var(--color-peach);
+  border-left: 5px solid var(--color-primary);
+  border-radius: var(--radius-small);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Menu items cannot be tapped when ordering is closed */
+.menu-grid--closed {
+  opacity: 0.4;
+  filter: grayscale(0.6);
+  pointer-events: none;
+}
+
+/* Clock icon color in the time pop-ups */
+.icon--alert {
+  color: var(--color-orange);
+}
+
+.icon--alert-over {
+  color: #c0392b;
+}

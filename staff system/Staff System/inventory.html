@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 | Inventory</title>
+
+  <script>
+    try {
+      if (sessionStorage.getItem("inventoryLoggedIn") !== "yes") { window.location.replace("login.html"); }
+    } catch (e) { window.location.replace("login.html"); }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Shared theme (colors, topbar, drawer, buttons, modals, toasts, alert banner) -->
+  <link rel="stylesheet" href="frontdesk.css">
+  <!-- Inventory-only additions -->
+  <link rel="stylesheet" href="inventory.css">
+  <link rel="stylesheet" href="inventory-responsive.css">
+</head>
+<body class="fd-page inventory-page">
+
+  <!-- ICON SPRITE -->
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M7.8 12.3l3 3 5.5-6"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="icon-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="icon-logout" viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="icon-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="icon-plus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="icon-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 7v5l3 2"/></symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8L3 12z"/><path d="M7.5 8h.01"/></symbol>
+    <symbol id="icon-ruler" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="1.5"/><path d="M6 8v4M10 8v3M14 8v4M18 8v3"/></symbol>
+    <symbol id="icon-hash" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M10 4L8 20M16 4l-2 16"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4l2-2z"/><path d="M10 21h4"/></symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></symbol>
+    <symbol id="icon-note" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5V3z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/></symbol>
+    <symbol id="icon-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="icon-swap" viewBox="0 0 24 24"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></symbol>
+    <symbol id="icon-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  </svg>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <button type="button" class="icon-button" id="menu-button" aria-label="Open menu">
+      <svg class="icon"><use href="#icon-menu"></use></svg>
+    </button>
+    <div class="topbar-title">
+      <h1 id="page-title">UNLTD 199 Samgyupsal Korean Grill House</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-clock">
+        <svg class="icon"><use href="#icon-clock"></use></svg>
+        <span id="topbar-clock">0:00:00 AM</span>
+      </div>
+      <div class="topbar-user">
+        <svg class="icon"><use href="#icon-user"></use></svg>
+        <span>Hi, Pierce!</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <nav class="drawer" id="drawer" aria-label="Inventory menu" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <p class="drawer-name">UNLTD 199</p>
+        <p class="drawer-role">Inventory Staff Portal</p>
+      </div>
+      <button type="button" class="icon-button" id="drawer-close-button" aria-label="Close menu">
+        <svg class="icon"><use href="#icon-close"></use></svg>
+      </button>
+    </div>
+    <ul class="drawer-list">
+      <li><button type="button" class="drawer-item drawer-item--active" data-view="inventory"><svg class="icon"><use href="#icon-box"></use></svg>Inventory Levels</button></li>
+      <li><button type="button" class="drawer-item" data-view="add"><svg class="icon"><use href="#icon-plus-circle"></use></svg>Add Item</button></li>
+      <li><button type="button" class="drawer-item" data-view="history"><svg class="icon"><use href="#icon-history"></use></svg>Stock History</button></li>
+    </ul>
+    <ul class="drawer-list drawer-list--bottom">
+      <li><button type="button" class="drawer-item" id="logout-button"><svg class="icon"><use href="#icon-logout"></use></svg>Log out</button></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+
+    <!-- INVENTORY LEVELS VIEW -->
+    <div id="view-inventory">
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-box"></use></svg></span>
+        <div><h2>Inventory Levels</h2><p>Monitor available supplies and low-stock items.</p></div>
+        <div class="page-head-actions">
+          <button type="button" class="button button--primary" id="go-add"><svg class="icon"><use href="#icon-plus"></use></svg>Add item</button>
+        </div>
+      </div>
+
+      <div class="stat-grid stat-grid--4">
+        <div class="stat-card stat-card--filter" data-filter="all" role="button" tabindex="0" aria-label="Show all items">
+          <span class="stat-icon"><svg class="icon"><use href="#icon-layers"></use></svg></span>
+          <div><p class="stat-label">Total Items</p><p class="stat-number" id="stat-total">0</p></div>
+        </div>
+        <div class="stat-card stat-card--filter" data-filter="in" role="button" tabindex="0" aria-label="Show items in stock">
+          <span class="stat-icon stat-icon--available"><svg class="icon"><use href="#icon-check"></use></svg></span>
+          <div><p class="stat-label">In Stock</p><p class="stat-number" id="stat-in">0</p></div>
+        </div>
+        <div class="stat-card stat-card--warning stat-card--filter" data-filter="low" role="button" tabindex="0" aria-label="Show low stock items">
+          <span class="stat-icon stat-icon--warning"><svg class="icon"><use href="#icon-alert"></use></svg></span>
+          <div><p class="stat-label">Low Stock</p><p class="stat-number" id="stat-low">0</p></div>
+        </div>
+        <div class="stat-card stat-card--danger stat-card--filter" data-filter="out" role="button" tabindex="0" aria-label="Show out of stock items">
+          <span class="stat-icon stat-icon--danger"><svg class="icon"><use href="#icon-x-circle"></use></svg></span>
+          <div><p class="stat-label">Out of Stock</p><p class="stat-number" id="stat-out">0</p></div>
+        </div>
+      </div>
+
+      <section class="panel panel--flush">
+        <div class="toolbar">
+          <div class="search">
+            <svg class="icon"><use href="#icon-search"></use></svg>
+            <input class="input" type="search" id="inv-search" placeholder="Search item or category" autocomplete="off" aria-label="Search inventory">
+          </div>
+          <select class="select" id="inv-category" aria-label="Filter by category">
+            <option value="all">All Categories</option>
+            <option>Meat</option>
+            <option>Seafood</option>
+            <option>Vegetables</option>
+            <option>Side Dishes</option>
+            <option>Sauces &amp; Condiments</option>
+            <option>Rice &amp; Noodles</option>
+            <option>Beverages</option>
+            <option>Supplies</option>
+          </select>
+          <select class="select" id="inv-status" aria-label="Filter by status">
+            <option value="all">All Status</option>
+            <option value="in">In Stock</option>
+            <option value="low">Low Stock</option>
+            <option value="out">Out of Stock</option>
+            <option value="restock">Needs Restock (Low + Out)</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Current Stock</th>
+                <th>Expiry Date</th>
+                <th>Status</th>
+                <th>Last Updated</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inv-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span class="pill" id="inv-count-pill">0 items</span>
+          <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg>Low stock means 25% or less of the full stock level is left.</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- ADD ITEM VIEW -->
+    <div id="view-add" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-plus-circle"></use></svg></span>
+        <div><h2>New Inventory Item</h2><p>Add a menu item or ingredient to the inventory list.</p></div>
+      </div>
+
+      <section class="panel">
+        <p class="info-note" id="add-menu-note"><svg class="icon"><use href="#icon-info"></use></svg><span>You can only add items that already exist on the menu. New products must be added to the menu by the Owner first.</span></p>
+        <form id="add-form" novalidate autocomplete="off">
+
+          <section class="form-section">
+            <h3 class="form-section-title"><svg class="icon"><use href="#icon-box"></use></svg>Item Details</h3>
+            <div class="form-grid">
+              <div class="field field--third" data-field="name">
+                <label for="add-name">Item Name</label>
+                <div class="input-wrap">
+                  <svg class="icon input-icon"><use href="#icon-box"></use></svg>
+                  <select class="select has-icon" id="add-name"></select>
+                </div>
+                <p class="field-error"></p>
+              </div>
+              <div class="field field--third" data-field="category">
+                <label for="add-category">Category</label>
+                <div class="input-wrap">
+                  <svg class="icon input-icon"><use href="#icon-tag"></use></svg>
+                  <input class="input has-icon" type="text" id="add-category" readonly tabindex="-1" placeholder="Auto-filled" autocomplete="off">
+                </div>
+                <p class="field-error"></p>
+              </div>
+              <div class="field field--third" data-field="unit">
+                <label for="add-unit">Unit</label>
+                <div class="input-wrap">
+                  <svg class="icon input-icon"><use href="#icon-ruler"></use></svg>
+                  <input class="input has-icon" type="text" id="add-unit" readonly tabindex="-1" placeholder="Auto-filled" autocomplete="off">
+                </div>
+                <p class="field-error"></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h3 class="form-section-title"><svg class="icon"><use href="#icon-layers"></use></svg>Stock Levels</h3>
+            <div class="form-grid">
+              <div class="field field--half" data-field="qty">
+                <label for="add-qty">Initial Stock</label>
+                <div class="input-wrap">
+                  <svg class="icon input-icon"><use href="#icon-hash"></use></svg>
+                  <input class="input has-icon" type="text" id="add-qty" inputmode="decimal" maxlength="9" placeholder="0">
+                </div>
+                <p class="field-hint">This is the full stock level. A low-stock alert shows when 25% or less is left.</p>
+                <p class="field-error"></p>
+              </div>
+              <div class="field field--half" data-field="expiry">
+                <label for="add-expiry">Expiry Date</label>
+                <div class="input-wrap">
+                  <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+                  <input class="input has-icon" type="date" id="add-expiry">
+                </div>
+                <p class="field-error"></p>
+              </div>
+            </div>
+          </section>
+
+          <div class="form-actions">
+            <button type="button" class="button button--outline" id="add-cancel">Cancel</button>
+            <button type="submit" class="button button--primary"><svg class="icon"><use href="#icon-plus-circle"></use></svg>Add Item</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <!-- STOCK HISTORY VIEW -->
+    <div id="view-history" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-history"></use></svg></span>
+        <div><h2>Stock History</h2><p>Every stock change, with the reason it was recorded.</p></div>
+      </div>
+
+      <section class="panel panel--flush">
+        <div class="table-wrap">
+          <table class="inv-table inv-table--history">
+            <thead>
+              <tr>
+                <th>Date &amp; Time</th>
+                <th>Item</th>
+                <th>Change</th>
+                <th>New Stock</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span class="pill" id="history-count-pill">0 records</span>
+          <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg>Showing the latest 200 changes.</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- POPUPS -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+
+    <!-- Update stock -->
+    <section class="modal modal--wide" id="modal-adjust" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-box"></use></svg>
+        <span>Update Stock</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--form">
+        <div class="item-summary">
+          <span class="item-summary-icon"><svg class="icon"><use href="#icon-box"></use></svg></span>
+          <div class="item-summary-main">
+            <p class="item-summary-name" id="adj-name">-</p>
+            <p class="item-summary-sub" id="adj-sub">-</p>
+          </div>
+          <div class="item-summary-stock">
+            <p class="item-summary-label">Current stock</p>
+            <p class="item-summary-qty" id="adj-current">-</p>
+          </div>
+        </div>
+
+        <div class="segmented" id="adj-type" role="group" aria-label="Type of stock update">
+          <button type="button" class="segmented-btn is-active" data-type="in"><svg class="icon"><use href="#icon-arrow-down"></use></svg>Stock in</button>
+          <button type="button" class="segmented-btn" data-type="out"><svg class="icon"><use href="#icon-arrow-up"></use></svg>Stock out</button>
+          <button type="button" class="segmented-btn" data-type="set"><svg class="icon"><use href="#icon-swap"></use></svg>Set count</button>
+        </div>
+
+        <div class="field" data-field="adjQty">
+          <label for="adj-qty" id="adj-qty-label">Quantity to add</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-hash"></use></svg>
+            <input class="input has-icon" type="text" id="adj-qty" inputmode="decimal" maxlength="9" placeholder="0" autocomplete="off">
+          </div>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field" data-field="adjReason">
+          <label for="adj-reason">Reason</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-note"></use></svg>
+            <select class="select has-icon" id="adj-reason"></select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="field" data-field="adjNote">
+          <label for="adj-note" id="adj-note-label">Note <span class="label-hint">(optional)</span></label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-edit"></use></svg>
+            <input class="input has-icon" type="text" id="adj-note" maxlength="120" placeholder="e.g. Delivery from supplier, invoice no. 1042" autocomplete="off">
+          </div>
+          <p class="field-error"></p>
+        </div>
+
+        <div class="adj-preview" id="adj-preview">
+          <span class="adj-preview-label"><svg class="icon"><use href="#icon-layers"></use></svg>New stock</span>
+          <strong id="adj-new">-</strong>
+          <span class="status-badge" id="adj-new-badge" hidden></span>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--primary" id="adj-confirm"><svg class="icon"><use href="#icon-check"></use></svg>Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Delete item -->
+    <section class="modal modal--wide" id="modal-delete" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-trash"></use></svg>
+        <span>Delete Item</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--form">
+        <div class="item-summary">
+          <span class="item-summary-icon"><svg class="icon"><use href="#icon-box"></use></svg></span>
+          <div class="item-summary-main">
+            <p class="item-summary-name" id="del-name">-</p>
+            <p class="item-summary-sub" id="del-sub">-</p>
+          </div>
+        </div>
+        <p class="modal-text modal-text--left">This removes the item from the inventory list. This action cannot be undone.</p>
+        <div class="field" data-field="delReason">
+          <label for="del-reason">Reason</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-note"></use></svg>
+            <select class="select has-icon" id="del-reason"></select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field" data-field="delNote">
+          <label for="del-note" id="del-note-label">Note <span class="label-hint">(optional)</span></label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-edit"></use></svg>
+            <input class="input has-icon" type="text" id="del-note" maxlength="120" placeholder="Add a short note" autocomplete="off">
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="del-confirm"><svg class="icon"><use href="#icon-trash"></use></svg>Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm delete -->
+    <section class="modal modal--wide" id="modal-delete-confirm" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-trash"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-trash"></use></svg></div>
+        <h2 class="modal-title">Delete this item?</h2>
+        <p class="modal-text">Are you sure you want to delete this item? This action cannot be undone.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-box"></use></svg>Item name</dt><dd id="dc-name">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Current stock</dt><dd id="dc-qty">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-note"></use></svg>Reason</dt><dd id="dc-reason">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" id="dc-back">Back</button>
+          <button type="button" class="button button--danger" id="dc-yes"><svg class="icon"><use href="#icon-trash"></use></svg>Yes, delete</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm new item -->
+    <section class="modal modal--wide" id="modal-add-confirm" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-plus-circle"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-box"></use></svg></div>
+        <h2 class="modal-title">Add this item?</h2>
+        <p class="modal-text">Please review the details below before adding it to the inventory.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-box"></use></svg>Item name</dt><dd id="ac-name">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-tag"></use></svg>Category</dt><dd id="ac-category">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Initial stock</dt><dd id="ac-qty">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-calendar"></use></svg>Expiry date</dt><dd id="ac-expiry">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-bell"></use></svg>Low-stock level (auto)</dt><dd id="ac-min">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Back</button>
+          <button type="button" class="button button--primary" id="add-confirm-yes"><svg class="icon"><use href="#icon-check"></use></svg>Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Log out -->
+    <section class="modal" id="modal-logout" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-logout"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-logout"></use></svg></div>
+        <h2 class="modal-title">Log out?</h2>
+        <p class="modal-text">Are you sure you want to sign out?</p>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="logout-yes">Log out</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script src="inventory.js"></script>
+</body>
+</html>

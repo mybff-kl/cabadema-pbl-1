@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 - Your Queue Number</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+
+  <!-- SCREEN 3: Show the customer's queue number -->
+  <main class="kiosk-screen">
+
+    <div class="logo-area">
+      <img class="logo-image" src="logo.png" alt="UNLTD 199 Samgyupsal Korean Grill House">
+      <div class="logo-fallback">UNLTD 199<small>Samgyupsal Korean Grill House</small></div>
+    </div>
+
+    <h1 class="screen-title screen-title--large">Your Queue Number</h1>
+
+    <section class="card queue-number-card">
+      <div class="card-header">Please keep this number</div>
+
+      <div class="card-body">
+        <!-- Queue number: filled in by script.js -->
+        <div class="queue-number-text" id="queue-number-text">A-000</div>
+
+        <!-- Estimated wait time -->
+        <div class="wait-time-pill">
+          <!-- Clock icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          <span>Estimated Wait Time</span>
+          <span class="divider"></span>
+          <span class="wait-time-value" id="wait-time-text">-- min</span>
+        </div>
+
+        <!-- Photo reminder -->
+        <div class="photo-note">
+          <!-- Camera icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <circle cx="12" cy="13" r="3.5"/>
+          </svg>
+          <span>Please take a photo for proof.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Countdown, then the page moves to the queue view -->
+    <div class="countdown-area">
+      <p>This screen will disappear in:</p>
+      <span class="countdown-number" id="countdown-number">10</span>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

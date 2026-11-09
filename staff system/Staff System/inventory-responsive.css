@@ -1,0 +1,43 @@
+/* =====================================================
+   UNLTD 199 - Inventory Staff | responsive rules
+   (load after inventory.css)
+   ===================================================== */
+@media (max-width: 1100px) {
+  .toolbar .select { width: 180px; }
+}
+
+@media (max-width: 900px) {
+  .stat-grid.stat-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; gap: 16px; }
+  .field--third, .field--half { grid-column: auto; }
+  .page-head-actions { margin-left: 0; width: 100%; }
+  .page-head-actions .button { flex: 1; }
+}
+
+@media (max-width: 720px) {
+  .toolbar .select { flex: 1 1 160px; width: auto; }
+
+  /* tables turn into stacked cards */
+  .inv-table, .inv-table--history { min-width: 0; }
+  .inv-table thead { display: none; }
+  .inv-table, .inv-table tbody, .inv-table tr, .inv-table td { display: block; width: 100%; }
+  .inv-table tbody tr { padding: 14px 16px; }
+  .inv-table td { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; text-align: right; }
+  .inv-table td::before { content: attr(data-label); font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; text-align: left; flex: none; }
+  .inv-table td.cell-actions { padding-top: 10px; }
+  .inv-table td.cell-actions { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+  .inv-table td.cell-actions .button { width: 100%; }
+  .inv-table td.cell-actions .button + .button { margin-left: 0; margin-top: 0; }
+  .stock-cell { min-width: 140px; }
+  .table-empty td::before { display: none; }
+}
+
+@media (max-width: 600px) {
+  .form-actions { flex-direction: column-reverse; }
+  .segmented-btn { font-size: 0.8rem; gap: 6px; padding: 6px; }
+  .segmented-btn .icon { display: none; }
+  .item-summary { flex-wrap: wrap; }
+  .item-summary-stock { width: 100%; text-align: left; display: flex; align-items: baseline; justify-content: space-between; }
+  .info-list > div { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .info-list dd { text-align: left; max-width: 100%; width: 100%; }
+}

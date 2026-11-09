@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 Samgyupsal</title>
+
+  <!-- Google Fonts (need internet). If offline, the browser uses fallback fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Khand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="login-responsive.css">
+</head>
+<body class="login-page">
+
+  <!-- ICON LIBRARY: each icon is defined once and reused with <svg class="icon"><use href="#icon-name"></use></svg> -->
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3.2"/><path d="M5.8 18.5c1.4-2.4 3.6-3.6 6.2-3.6s4.8 1.2 6.2 3.6"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 10V8a5 5 0 0 1 10 0v2h.5A1.5 1.5 0 0 1 19 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-8A1.5 1.5 0 0 1 6.5 10zm2 0h6V8a3 3 0 0 0-6 0zm3 4.2a1.6 1.6 0 0 0-.8 3v1.6h1.6v-1.6a1.6 1.6 0 0 0-.8-3z"/></symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3.2"/></symbol>
+    <symbol id="icon-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10.5 7 10.5 7a17 17 0 0 1-3.2 3.9M6.6 6.7A17 17 0 0 0 1.5 12S5.5 19 12 19a9.600 9.600 0 0 0 4.100-.9M9.900 9.900a3.200 3.200 0 0 0 4.200 4.200"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5M12 7.8h.01"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v6M12 16.2h.01"/></symbol>
+  </svg>
+
+  <main class="login-screen">
+
+    <!-- LOGO SPACER: Leaves clean space for the logo built into the background image -->
+    <div class="login-logo"></div>
+
+    <section class="login-panel">
+      <h1 class="login-title">Welcome Back!</h1>
+      <p class="login-subtitle">Sign in to continue to your Samgyupsal experience.</p>
+
+      <form id="login-form" novalidate>
+
+        <!-- Username -->
+        <div class="field">
+          <label class="field-label" for="username-input">Username</label>
+          <div class="input-wrap" id="username-wrap">
+            <svg class="icon input-icon"><use href="#icon-user"></use></svg>
+            <input class="input" type="text" id="username-input" placeholder="Username" autocomplete="username" autocapitalize="off" spellcheck="false">
+          </div>
+          <p class="field-error" id="username-error" role="alert" hidden></p>
+        </div>
+
+       <!-- Password -->
+  <div class="field">
+    <label class="field-label" for="password-input">Password</label>
+    <div class="input-wrap" id="password-wrap">
+      <svg class="icon input-icon"><use href="#icon-lock"></use></svg>
+      <input class="input input--with-button" type="password" id="password-input" placeholder="Password" autocomplete="current-password">
+      <button type="button" class="show-password-button" id="toggle-password-button" aria-label="Show password" aria-pressed="false"></button>
+    </div>
+    <p class="field-error" id="password-error" role="alert" hidden></p>
+  </div>
+
+        <div class="login-links">
+          <button type="button" class="link-button" id="forgot-button">Forgot Password?</button>
+        </div>
+
+        <!-- Shown when the username or password is wrong -->
+        <p class="form-error" id="login-error" role="alert" hidden>
+          <svg class="icon"><use href="#icon-alert"></use></svg>
+          <span id="login-error-text"></span>
+        </p>
+
+        <button type="submit" class="button button--primary button--full" id="login-button">Log In</button>
+      </form>
+    </section>
+
+  </main>
+
+
+ <!-- FORGOT PASSWORD POP-UP -->
+<div class="modal-overlay" id="forgot-overlay" hidden>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="forgot-title">
+    <div class="modal-bar"></div>
+    <div class="modal-body">
+      <svg class="icon icon--huge"><use href="#icon-info"></use></svg>
+      <h2 class="modal-title" id="forgot-title">Forgot Password?</h2>
+      <p class="modal-text">Please contact the Administrator to reset your password.</p>
+      <div class="modal-buttons">
+        <button type="button" class="button button--primary" id="forgot-ok-button">OK</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+  <script src="common.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

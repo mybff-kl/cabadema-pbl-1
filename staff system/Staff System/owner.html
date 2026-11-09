@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 | Owner</title>
+
+  <script>
+    try {
+      if (sessionStorage.getItem("OwnerLoggedIn") !== "yes") { window.location.replace("login.html"); }
+    } catch (e) { window.location.replace("login.html"); }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Shared theme (colors, topbar, drawer, buttons, modals, toasts) -->
+  <link rel="stylesheet" href="frontdesk.css">
+  <!-- Owner-only additions -->
+  <link rel="stylesheet" href="owner.css">
+  <link rel="stylesheet" href="owner-responsive.css">
+</head>
+<body class="fd-page owner-page">
+
+  <!-- ICON SPRITE -->
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M7.8 12.3l3 3 5.5-6"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><circle cx="5.5" cy="10" r="2.2"/><circle cx="18.5" cy="10" r="2.2"/><path d="M6.5 19c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5M1.5 17c0-2.2 1.6-3.8 4-3.8M22.5 17c0-2.2-1.6-3.8-4-3.8"/></symbol>
+    <symbol id="icon-logout" viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="icon-chart-line" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+    <symbol id="icon-pulse" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+    <symbol id="icon-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H4v1a3 3 0 0 0 4 3M16 6h4v1a3 3 0 0 1-4 3M12 13v4M8 21h8M10 17h4"/></symbol>
+    <symbol id="icon-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5V3z"/><path d="M14 3v5h5M8 17v-3M12 17v-6M16 17v-4"/></symbol>
+    <symbol id="icon-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3zM9 8h6M9 12h6"/></symbol>
+    <symbol id="icon-table" viewBox="0 0 24 24"><path d="M4 9h16M7 9L5 19M17 9l2 10M6.5 14h11M9 5h6"/></symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+    <symbol id="icon-restore" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 7v5l3 2"/></symbol>
+    <symbol id="icon-save" viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5V3zM8 3v5h7M8 21v-7h8v7"/></symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 16V5M7 9l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="icon-print" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17H4v-7h16v7h-3M7 14h10v7H7v-7z"/></symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="icon-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4-2v-4L3 5z"/></symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8L3 12z"/><path d="M7.5 8h.01"/></symbol>
+    <symbol id="icon-peso" viewBox="0 0 24 24"><path d="M7 4v16M7 4h5a4 4 0 0 1 0 8H7M4 8h11M4 11h11"/></symbol>
+    <symbol id="icon-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8zM9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></symbol>
+    <symbol id="icon-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.5-8 6 6 0 0 1 11.5 1.5A3.5 3.5 0 0 1 17.5 18H7z"/></symbol>
+    <symbol id="icon-utensils" viewBox="0 0 24 24"><path d="M18 2v6a3 3 0 0 1-3 3v9M15 2v9M6 2v6a3 3 0 0 0 3 3v9M9 2v9M6 14h6"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="icon-hash" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M10 4L8 20M16 4l-2 16"/></symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="icon-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  </svg>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <button type="button" class="icon-button" id="menu-button" aria-label="Open menu">
+      <svg class="icon"><use href="#icon-menu"></use></svg>
+    </button>
+    <div class="topbar-title">
+      <h1 id="page-title">UNLTD 199 Samgyupsal Korean Grill House</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-clock">
+        <svg class="icon"><use href="#icon-clock"></use></svg>
+        <span id="topbar-clock">0:00:00 AM</span>
+      </div>
+      <div class="topbar-user">
+        <svg class="icon"><use href="#icon-user"></use></svg>
+        <span>Hi, Cyrus!</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <nav class="drawer" id="drawer" aria-label="Owner menu" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <p class="drawer-name">UNLTD 199</p>
+        <p class="drawer-role">Owner Portal</p>
+      </div>
+      <button type="button" class="icon-button" id="drawer-close-button" aria-label="Close menu">
+        <svg class="icon"><use href="#icon-close"></use></svg>
+      </button>
+    </div>
+    <ul class="drawer-list">
+      <li><button type="button" class="drawer-item drawer-item--active" data-view="sales"><svg class="icon"><use href="#icon-chart-line"></use></svg>Sales and Trends</button></li>
+      <li><button type="button" class="drawer-item" data-view="peak"><svg class="icon"><use href="#icon-pulse"></use></svg>Peak Analytics</button></li>
+      <li><button type="button" class="drawer-item" data-view="items"><svg class="icon"><use href="#icon-trophy"></use></svg>Most Ordered Items</button></li>
+      <li><button type="button" class="drawer-item" data-view="report"><svg class="icon"><use href="#icon-report"></use></svg>Sales Report</button></li>
+      <li><button type="button" class="drawer-item" data-view="transactions"><svg class="icon"><use href="#icon-receipt"></use></svg>Transactions</button></li>
+      <li><button type="button" class="drawer-item" data-view="menu"><svg class="icon"><use href="#icon-utensils"></use></svg>Menu Management</button></li>
+      <li><button type="button" class="drawer-item" data-view="tables"><svg class="icon"><use href="#icon-table"></use></svg>Table Configuration</button></li>
+      <li><button type="button" class="drawer-item" data-view="backup"><svg class="icon"><use href="#icon-database"></use></svg>Backup and Restore</button></li>
+    </ul>
+    <ul class="drawer-list drawer-list--bottom">
+      <li><button type="button" class="drawer-item" id="logout-button"><svg class="icon"><use href="#icon-logout"></use></svg>Log out</button></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+
+    <!-- ===================== SALES & TRENDS ===================== -->
+    <div id="view-sales">
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-chart-line"></use></svg></span>
+        <div><h2>Sales &amp; Trends</h2><p>Track sales performance, trends, and peak hours.</p></div>
+      </div>
+
+      <section class="panel filter-panel">
+        <div class="filter-grid">
+          <div class="field">
+            <label for="sales-category">Category</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-tag"></use></svg>
+              <select class="select has-icon" id="sales-category">
+                <option value="all">All Categories</option>
+                <option>Unli 199</option>
+                <option>Drinks</option>
+                <option>Meat</option>
+                <option>Sauces</option>
+                <option>Sides</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="sales-period">Time Period</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+              <select class="select has-icon" id="sales-period">
+                <option value="today">24 Hours</option>
+                <option value="week" selected>Weekly</option>
+                <option value="month">Monthly</option>
+                <option value="year">Yearly</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="stat-grid stat-grid--4">
+        <div class="stat-card">
+          <span class="stat-icon"><svg class="icon"><use href="#icon-peso"></use></svg></span>
+          <div><p class="stat-label">Today's Sales</p><p class="stat-number stat-number--money" id="kpi-today">-</p><p class="stat-sub" id="kpi-today-sub">-</p></div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon stat-icon--available"><svg class="icon"><use href="#icon-calendar"></use></svg></span>
+          <div><p class="stat-label">Weekly Sales</p><p class="stat-number stat-number--money" id="kpi-week">-</p><p class="stat-sub" id="kpi-week-sub">-</p></div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon stat-icon--warning"><svg class="icon"><use href="#icon-chart-line"></use></svg></span>
+          <div><p class="stat-label">Monthly Sales</p><p class="stat-number stat-number--money" id="kpi-month">-</p><p class="stat-sub" id="kpi-month-sub">-</p></div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon stat-icon--occupied"><svg class="icon"><use href="#icon-users"></use></svg></span>
+          <div><p class="stat-label">Total Customers</p><p class="stat-number" id="kpi-customers">-</p><p class="stat-sub" id="kpi-customers-sub">-</p></div>
+        </div>
+      </div>
+
+      <div class="two-column">
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title"><svg class="icon"><use href="#icon-chart-line"></use></svg>Sales Trend</h2>
+            <span class="pill" id="trend-pill">-</span>
+          </div>
+          <div class="chart-box" id="trend-chart"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title"><svg class="icon"><use href="#icon-trophy"></use></svg><span id="top-title">Top Selling</span></h2>
+            <span class="pill" id="top-pill">-</span>
+          </div>
+          <div class="chart-box" id="top-chart"></div>
+          <p class="chart-note" id="top-note"></p>
+        </section>
+      </div>
+
+      <section class="panel panel--spaced">
+        <div class="panel-head">
+          <h2 class="panel-title"><svg class="icon"><use href="#icon-clock"></use></svg>Peak Hours Analysis</h2>
+          <span class="pill" id="peak-pill">-</span>
+        </div>
+        <div class="peak-grid" id="peak-blocks"></div>
+      </section>
+    </div>
+
+    <!-- ===================== PEAK ANALYTICS ===================== -->
+    <div id="view-peak" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-pulse"></use></svg></span>
+        <div><h2>Peak Analytics</h2><p>See when the restaurant is busiest by hour, day, or season.</p></div>
+      </div>
+
+      <section class="panel filter-panel">
+        <div class="peak-controls">
+          <div class="field">
+            <label>View</label>
+            <div class="segmented" id="peak-mode" role="group" aria-label="Chart type">
+              <button type="button" class="segmented-btn is-active" data-mode="hourly"><svg class="icon"><use href="#icon-clock"></use></svg>Hourly</button>
+              <button type="button" class="segmented-btn" data-mode="daily"><svg class="icon"><use href="#icon-calendar"></use></svg>Daily</button>
+              <button type="button" class="segmented-btn" data-mode="seasonal"><svg class="icon"><use href="#icon-sun"></use></svg>Seasonal</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Measure</label>
+            <div class="segmented segmented--2" id="peak-metric" role="group" aria-label="Measure">
+              <button type="button" class="segmented-btn is-active" data-metric="sales"><svg class="icon"><use href="#icon-peso"></use></svg>Sales</button>
+              <button type="button" class="segmented-btn" data-metric="orders"><svg class="icon"><use href="#icon-bag"></use></svg>Orders</button>
+            </div>
+          </div>
+        </div>
+        <div class="filter-grid filter-grid--3">
+          <div class="field">
+            <label for="peak-quick">Date Range</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+              <select class="select has-icon" id="peak-quick">
+                <option value="7">Last 7 Days</option>
+                <option value="30" selected>Last 30 Days</option>
+                <option value="90">Last 90 Days</option>
+                <option value="365">Last 12 Months</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="peak-from">From</label>
+            <input class="input" type="date" id="peak-from">
+          </div>
+          <div class="field">
+            <label for="peak-to">To</label>
+            <input class="input" type="date" id="peak-to">
+          </div>
+        </div>
+        <p class="field-error" id="peak-error"></p>
+      </section>
+
+      <div class="stat-grid stat-grid--3">
+        <div class="stat-card">
+          <span class="stat-icon stat-icon--danger"><svg class="icon"><use href="#icon-pulse"></use></svg></span>
+          <div><p class="stat-label" id="pk-1-label">Busiest</p><p class="stat-number stat-number--md" id="pk-1">-</p><p class="stat-sub" id="pk-1-sub">-</p></div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon stat-icon--available"><svg class="icon"><use href="#icon-clock"></use></svg></span>
+          <div><p class="stat-label" id="pk-2-label">Slowest</p><p class="stat-number stat-number--md" id="pk-2">-</p><p class="stat-sub" id="pk-2-sub">-</p></div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon"><svg class="icon"><use href="#icon-layers"></use></svg></span>
+          <div><p class="stat-label" id="pk-3-label">Average</p><p class="stat-number stat-number--md" id="pk-3">-</p><p class="stat-sub" id="pk-3-sub">-</p></div>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title"><svg class="icon"><use href="#icon-pulse"></use></svg><span id="peak-chart-title">Peak Hours</span></h2>
+          <span class="pill" id="peak-range-pill">-</span>
+        </div>
+        <div class="chart-box chart-box--tall" id="peak-chart"></div>
+        <p class="insight" id="peak-insight"></p>
+      </section>
+    </div>
+
+    <!-- ===================== MOST ORDERED ITEMS ===================== -->
+    <div id="view-items" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-trophy"></use></svg></span>
+        <div><h2>Most Ordered Items</h2><p>Ranked report of the best-selling menu items.</p></div>
+      </div>
+
+      <section class="panel filter-panel">
+        <div class="filter-grid filter-grid--3">
+          <div class="field">
+            <label for="items-category">Category</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-tag"></use></svg>
+              <select class="select has-icon" id="items-category">
+                <option value="all">All Categories</option>
+                <option>Unli 199</option>
+                <option>Drinks</option>
+                <option>Meat</option>
+                <option>Sauces</option>
+                <option>Sides</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="items-period">Time Period</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+              <select class="select has-icon" id="items-period">
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month" selected>This Month</option>
+                <option value="90">Last 90 Days</option>
+                <option value="year">Last 12 Months</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="items-limit">Show</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-list"></use></svg>
+              <select class="select has-icon" id="items-limit">
+                <option value="5">Top 5</option>
+                <option value="10" selected>Top 10</option>
+                <option value="0">All items</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel--flush">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th class="col-rank">Rank</th>
+                <th>Item</th>
+                <th>Category</th>
+                <th class="num">Qty Ordered</th>
+                <th class="num">Sales</th>
+                <th>Share of Orders</th>
+              </tr>
+            </thead>
+            <tbody id="items-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span class="pill" id="items-pill">0 items</span>
+          <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg><span id="items-note"></span></span>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===================== SALES REPORT ===================== -->
+    <div id="view-report" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-report"></use></svg></span>
+        <div><h2>Sales Report</h2><p>Generate a report for financial auditing.</p></div>
+      </div>
+
+      <section class="panel filter-panel">
+        <div class="filter-grid filter-grid--4">
+          <div class="field">
+            <label for="rep-quick">Date Range</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+              <select class="select has-icon" id="rep-quick">
+                <option value="today">Today</option>
+                <option value="7" selected>Last 7 Days</option>
+                <option value="30">Last 30 Days</option>
+                <option value="month">This Month</option>
+                <option value="lastmonth">Last Month</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="rep-from">From</label>
+            <input class="input" type="date" id="rep-from">
+          </div>
+          <div class="field">
+            <label for="rep-to">To</label>
+            <input class="input" type="date" id="rep-to">
+          </div>
+          <div class="field field--action">
+            <button type="button" class="button button--primary" id="rep-generate"><svg class="icon"><use href="#icon-report"></use></svg>Generate Report</button>
+          </div>
+        </div>
+        <p class="field-error" id="rep-error"></p>
+      </section>
+
+      <div id="rep-results">
+        <div class="report-head">
+          <div>
+            <h3 class="report-title" id="rep-title">Sales Report</h3>
+            <p class="report-meta" id="rep-meta">-</p>
+          </div>
+          <div class="report-actions">
+            <button type="button" class="button button--outline button--small" id="rep-csv"><svg class="icon"><use href="#icon-download"></use></svg>Download CSV</button>
+            <button type="button" class="button button--outline button--small" id="rep-print"><svg class="icon"><use href="#icon-print"></use></svg>Print</button>
+          </div>
+        </div>
+
+        <div class="stat-grid stat-grid--4">
+          <div class="stat-card">
+            <span class="stat-icon"><svg class="icon"><use href="#icon-peso"></use></svg></span>
+            <div><p class="stat-label">Total Revenue</p><p class="stat-number stat-number--money" id="rep-revenue">-</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon stat-icon--available"><svg class="icon"><use href="#icon-bag"></use></svg></span>
+            <div><p class="stat-label">Number of Orders</p><p class="stat-number" id="rep-orders">-</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon stat-icon--warning"><svg class="icon"><use href="#icon-receipt"></use></svg></span>
+            <div><p class="stat-label">Avg. Order Value</p><p class="stat-number stat-number--money" id="rep-aov">-</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon stat-icon--occupied"><svg class="icon"><use href="#icon-utensils"></use></svg></span>
+            <div><p class="stat-label">Items Sold</p><p class="stat-number" id="rep-items">-</p></div>
+          </div>
+        </div>
+
+        <section class="panel panel--flush">
+          <div class="panel-head panel-head--pad">
+            <h2 class="panel-title"><svg class="icon"><use href="#icon-calendar"></use></svg><span id="rep-breakdown-title">Sales Breakdown</span></h2>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th id="rep-col-date">Date</th>
+                  <th class="num">Orders</th>
+                  <th class="num">Items Sold</th>
+                  <th class="num">Revenue</th>
+                  <th>Share of Revenue</th>
+                </tr>
+              </thead>
+              <tbody id="rep-body"></tbody>
+              <tfoot id="rep-foot"></tfoot>
+            </table>
+          </div>
+          <div class="table-foot">
+            <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg><span id="rep-note"></span></span>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ===================== TRANSACTIONS ===================== -->
+    <div id="view-transactions" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-receipt"></use></svg></span>
+        <div><h2>Transactions</h2><p>Review completed sales records for auditing.</p></div>
+      </div>
+
+      <section class="panel panel--flush">
+        <div class="toolbar toolbar--grid">
+          <div class="field">
+            <label for="tx-quick">Date Range</label>
+            <select class="select" id="tx-quick">
+              <option value="today">Today</option>
+              <option value="7" selected>Last 7 Days</option>
+              <option value="30">Last 30 Days</option>
+              <option value="month">This Month</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="tx-from">From</label>
+            <input class="input" type="date" id="tx-from">
+          </div>
+          <div class="field">
+            <label for="tx-to">To</label>
+            <input class="input" type="date" id="tx-to">
+          </div>
+          <div class="field">
+            <label for="tx-status">Status</label>
+            <select class="select" id="tx-status">
+              <option value="all">All Status</option>
+              <option>Completed</option>
+              <option>Refunded</option>
+              <option>Voided</option>
+            </select>
+          </div>
+          <div class="field field--search">
+            <label for="tx-search">Search</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-search"></use></svg>
+              <input class="input has-icon" type="search" id="tx-search" placeholder="Transaction ID or table" autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <p class="field-error field-error--pad" id="tx-error"></p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Table</th>
+                <th class="num">Items</th>
+                <th class="num">Amount</th>
+                <th>Status</th>
+                <th class="col-actions">Details</th>
+              </tr>
+            </thead>
+            <tbody id="tx-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span class="pill" id="tx-pill">0 transactions</span>
+          <button type="button" class="button button--outline button--small" id="tx-more" hidden>Show more</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===================== MENU MANAGEMENT ===================== -->
+    <div id="view-menu" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-utensils"></use></svg></span>
+        <div><h2>Menu Management</h2><p>Add, change, or remove menu items. Every change needs your confirmation.</p></div>
+        <div class="page-head-actions">
+          <button type="button" class="button button--primary" id="menu-add-btn"><svg class="icon"><use href="#icon-plus"></use></svg>Add Menu Item</button>
+          <button type="button" class="button button--primary" id="ing-add-btn" hidden><svg class="icon"><use href="#icon-plus"></use></svg>Add New Ingredient</button>
+        </div>
+      </div>
+
+      <div class="segmented segmented--2 segmented--tabs" id="menu-tabs" role="group" aria-label="Menu management sections">
+        <button type="button" class="segmented-btn is-active" data-mtab="menu"><svg class="icon"><use href="#icon-utensils"></use></svg>Menu Items</button>
+        <button type="button" class="segmented-btn" data-mtab="ing"><svg class="icon"><use href="#icon-layers"></use></svg>Ingredients</button>
+      </div>
+
+      <div id="menu-pane">
+      <div class="summary-strip">
+        <div class="summary-item">
+          <span class="stat-icon"><svg class="icon"><use href="#icon-utensils"></use></svg></span>
+          <div><p class="stat-label">Total Items</p><p class="stat-number" id="menu-total">0</p></div>
+        </div>
+        <div class="summary-item">
+          <span class="stat-icon stat-icon--available"><svg class="icon"><use href="#icon-check"></use></svg></span>
+          <div><p class="stat-label">Available</p><p class="stat-number" id="menu-avail">0</p></div>
+        </div>
+        <div class="summary-item">
+          <span class="stat-icon stat-icon--danger"><svg class="icon"><use href="#icon-alert"></use></svg></span>
+          <div><p class="stat-label">Unavailable</p><p class="stat-number" id="menu-unavail">0</p></div>
+        </div>
+      </div>
+
+      <section class="panel panel--flush">
+        <div class="toolbar toolbar--menu">
+          <div class="field field--search">
+            <label for="menu-search">Search</label>
+            <div class="input-wrap">
+              <svg class="icon input-icon"><use href="#icon-search"></use></svg>
+              <input class="input has-icon" type="search" id="menu-search" placeholder="Search menu item" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="menu-category">Category</label>
+            <select class="select" id="menu-category">
+              <option value="all">All Categories</option>
+              <option>Unli 199</option>
+              <option>Drinks</option>
+              <option>Meat</option>
+              <option>Sauces</option>
+              <option>Sides</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="menu-status">Status</label>
+            <select class="select" id="menu-status">
+              <option value="all">All Status</option>
+              <option value="available">Available</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Unit</th>
+                <th class="num">Price</th>
+                <th>Status</th>
+                <th class="col-actions col-actions--wide">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="menu-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span class="pill" id="menu-pill">0 items</span>
+          <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg>Changes apply to the menu only. Past transactions are not changed.</span>
+        </div>
+      </section>
+      </div><!-- /menu-pane -->
+
+      <div id="ing-pane" hidden>
+        <div class="summary-strip">
+          <div class="summary-item">
+            <span class="stat-icon"><svg class="icon"><use href="#icon-layers"></use></svg></span>
+            <div><p class="stat-label">Total Ingredients</p><p class="stat-number" id="ing-total">0</p></div>
+          </div>
+        </div>
+
+        <section class="panel panel--flush">
+          <div class="toolbar toolbar--ing">
+            <div class="field field--search">
+              <label for="ing-search">Search</label>
+              <div class="input-wrap">
+                <svg class="icon input-icon"><use href="#icon-search"></use></svg>
+                <input class="input has-icon" type="search" id="ing-search" placeholder="Search ingredient" autocomplete="off">
+              </div>
+            </div>
+            <div class="field">
+              <label for="ing-category">Category</label>
+              <select class="select" id="ing-category">
+                <option value="all">All Categories</option>
+                <option>Meat</option><option>Seafood</option><option>Vegetables</option><option>Side Dishes</option><option>Sauces &amp; Condiments</option><option>Rice &amp; Noodles</option><option>Beverages</option><option>Supplies</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Ingredient Name</th>
+                  <th>Category</th>
+                  <th>Unit of Measurement</th>
+                  <th class="col-actions col-actions--wide">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ing-body"></tbody>
+            </table>
+          </div>
+          <div class="table-foot">
+            <span class="pill" id="ing-pill">0 ingredients</span>
+            <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg>The Inventory Staff can only add items that are on the menu or in this ingredient list.</span>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ===================== TABLE CONFIGURATION ===================== -->
+    <div id="view-tables" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-table"></use></svg></span>
+        <div><h2>Table Configuration</h2><p>Manage restaurant tables and seating capacity.</p></div>
+        <div class="page-head-actions">
+          <button type="button" class="button button--primary" id="go-add-table"><svg class="icon"><use href="#icon-plus"></use></svg>Add Table</button>
+        </div>
+      </div>
+
+      <div class="summary-strip">
+        <div class="summary-item">
+          <span class="stat-icon"><svg class="icon"><use href="#icon-table"></use></svg></span>
+          <div><p class="stat-label">Total Tables</p><p class="stat-number" id="tbl-total">0</p></div>
+        </div>
+        <div class="summary-item">
+          <span class="stat-icon stat-icon--occupied"><svg class="icon"><use href="#icon-users"></use></svg></span>
+          <div><p class="stat-label">Seating Capacity</p><p class="stat-number" id="tbl-seats-total">0</p></div>
+        </div>
+      </div>
+
+      <div class="table-cards" id="table-grid"></div>
+    </div>
+
+    <!-- ===================== BACKUP & RESTORE ===================== -->
+    <div id="view-backup" hidden>
+      <div class="page-head">
+        <span class="page-icon"><svg class="icon"><use href="#icon-database"></use></svg></span>
+        <div><h2>Backup &amp; Restore</h2><p>Keep a safe copy of your data and recover it when needed.</p></div>
+        <div class="page-head-actions">
+          <button type="button" class="button button--primary" id="bk-now"><svg class="icon"><use href="#icon-save"></use></svg>Back up now</button>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title"><svg class="icon"><use href="#icon-clock"></use></svg>Automatic Backup</h2>
+          <span class="status-badge status-badge--available" id="bk-status-pill">On</span>
+        </div>
+
+        <div class="backup-settings">
+          <label class="switch" for="bk-enabled">
+            <input type="checkbox" id="bk-enabled" checked>
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            <span class="switch-text">Back up automatically</span>
+          </label>
+
+          <div class="filter-grid filter-grid--3">
+            <div class="field">
+              <label for="bk-frequency">Frequency</label>
+              <div class="input-wrap">
+                <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+                <select class="select has-icon" id="bk-frequency">
+                  <option value="daily" selected>Every day</option>
+                  <option value="weekly">Every week</option>
+                </select>
+              </div>
+            </div>
+            <div class="field" id="bk-day-field" hidden>
+              <label for="bk-day">Day of the week</label>
+              <div class="input-wrap">
+                <svg class="icon input-icon"><use href="#icon-calendar"></use></svg>
+                <select class="select has-icon" id="bk-day">
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                  <option value="6">Saturday</option>
+                  <option value="0" selected>Sunday</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="bk-time">Time</label>
+              <div class="input-wrap">
+                <svg class="icon input-icon"><use href="#icon-clock"></use></svg>
+                <input class="input has-icon" type="time" id="bk-time" value="02:00">
+              </div>
+            </div>
+          </div>
+
+          <div class="info-list info-list--plain">
+            <div><dt><svg class="icon"><use href="#icon-clock"></use></svg>Next scheduled backup</dt><dd id="bk-next">-</dd></div>
+            <div><dt><svg class="icon"><use href="#icon-shield-check"></use></svg>Last backup</dt><dd id="bk-last">-</dd></div>
+          </div>
+          <p class="chart-note">Each backup saves a copy of all transactions, menu, and order data, plus the table configuration. Backups run while the system is open. Tip: set the time a minute ahead to watch it run.</p>
+        </div>
+      </section>
+
+      <section class="panel panel--flush panel--spaced">
+        <div class="panel-head panel-head--pad">
+          <h2 class="panel-title"><svg class="icon"><use href="#icon-restore"></use></svg>Backup Files</h2>
+          <div class="panel-head-right">
+            <span class="pill" id="bk-count-pill">0 backups</span>
+            <button type="button" class="button button--outline button--small" id="bk-import-btn"><svg class="icon"><use href="#icon-upload"></use></svg>Import file</button>
+            <input type="file" id="bk-import" accept=".json,application/json" hidden>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Type</th>
+                <th>Created</th>
+                <th class="num">Size</th>
+                <th>Contents</th>
+                <th class="col-actions col-actions--wide">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bk-body"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span class="table-note"><svg class="icon"><use href="#icon-info"></use></svg>Restoring replaces your current data with the selected backup. A safety backup is created first.</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- POPUPS -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+
+    <!-- Transaction details -->
+    <section class="modal modal--wide" id="modal-txn" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-receipt"></use></svg>
+        <span>Transaction Details</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--form">
+        <div class="item-summary">
+          <span class="item-summary-icon"><svg class="icon"><use href="#icon-receipt"></use></svg></span>
+          <div class="item-summary-main">
+            <p class="item-summary-name" id="txd-id">-</p>
+            <p class="item-summary-sub" id="txd-when">-</p>
+          </div>
+          <span class="status-badge" id="txd-status">-</span>
+        </div>
+
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-table"></use></svg>Table</dt><dd id="txd-table">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-users"></use></svg>Customers</dt><dd id="txd-pax">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-peso"></use></svg>Payment</dt><dd id="txd-pay">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-user"></use></svg>Cashier</dt><dd id="txd-cashier">-</dd></div>
+        </dl>
+
+        <div class="receipt">
+          <div class="receipt-row receipt-row--head"><span>Item</span><span>Qty</span><span>Price</span><span>Amount</span></div>
+          <div id="txd-lines"></div>
+          <div class="receipt-row receipt-row--total"><span>Total</span><span></span><span></span><span id="txd-total">-</span></div>
+        </div>
+        <p class="chart-note" id="txd-note" hidden></p>
+
+        <div class="modal-buttons">
+          <button type="button" class="button button--primary" data-close>Close</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add / edit menu item -->
+    <section class="modal modal--wide" id="modal-menu-form" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-utensils"></use></svg>
+        <span id="mf-title">Add Menu Item</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--form">
+        <div class="field field--left" data-field="name">
+          <label for="mf-name">Item Name</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-utensils"></use></svg>
+            <input class="input has-icon" type="text" id="mf-name" placeholder="e.g. Cheese Dip" autocomplete="off" maxlength="40">
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field field--left" data-field="category">
+          <label for="mf-category">Category</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-tag"></use></svg>
+            <select class="select has-icon" id="mf-category">
+              <option value="">Select category</option>
+              <option>Unli 199</option>
+              <option>Drinks</option>
+              <option>Meat</option>
+              <option>Sauces</option>
+              <option>Sides</option>
+            </select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field field--left" data-field="unit">
+          <label for="mf-unit">Unit of Measurement</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-layers"></use></svg>
+            <select class="select has-icon" id="mf-unit">
+              <option value="">Select unit (pcs, kg, L, ...)</option>
+              <option>pcs</option><option>kg</option><option>g</option><option>L</option><option>mL</option><option>packs</option><option>bottles</option><option>cans</option><option>cases</option><option>sacks</option><option>tubs</option><option>servings</option>
+            </select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field field--left" data-field="price">
+          <label for="mf-price">Price (PHP)</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-peso"></use></svg>
+            <input class="input has-icon" type="text" id="mf-price" placeholder="e.g. 60" autocomplete="off" inputmode="numeric" maxlength="4">
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field field--left" data-field="status">
+          <label for="mf-status">Status</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-check"></use></svg>
+            <select class="select has-icon" id="mf-status">
+              <option value="available">Available</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--primary" id="mf-submit"><svg class="icon"><use href="#icon-check"></use></svg><span id="mf-submit-text">Add Item</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm add -->
+    <section class="modal modal--wide" id="modal-menu-add-confirm" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-plus"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-plus"></use></svg></div>
+        <h2 class="modal-title">Add this menu item?</h2>
+        <p class="modal-text">The item will be added to the menu.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-utensils"></use></svg>Item Name</dt><dd id="ma-name">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-tag"></use></svg>Category</dt><dd id="ma-category">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Unit</dt><dd id="ma-unit">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-peso"></use></svg>Price</dt><dd id="ma-price">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-check"></use></svg>Status</dt><dd id="ma-status">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" id="ma-back">Back</button>
+          <button type="button" class="button button--primary" id="ma-yes"><svg class="icon"><use href="#icon-check"></use></svg>Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm changes -->
+    <section class="modal modal--wide" id="modal-menu-edit-confirm" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-edit"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-edit"></use></svg></div>
+        <h2 class="modal-title">Save these changes?</h2>
+        <p class="modal-text">Review the changes to <strong id="me-name">-</strong> before saving.</p>
+        <div class="change-list" id="me-changes"></div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" id="me-back">Back</button>
+          <button type="button" class="button button--primary" id="me-yes"><svg class="icon"><use href="#icon-check"></use></svg>Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm delete -->
+    <section class="modal modal--wide" id="modal-menu-delete" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-trash"></use></svg>
+        <span>Delete Menu Item</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-trash"></use></svg></div>
+        <h2 class="modal-title">Delete this menu item?</h2>
+        <p class="modal-text">This will remove <strong id="md-name">-</strong> from the menu. This action cannot be undone.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-tag"></use></svg>Category</dt><dd id="md-category">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Unit</dt><dd id="md-unit">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-peso"></use></svg>Price</dt><dd id="md-price">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-check"></use></svg>Status</dt><dd id="md-status">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="md-yes"><svg class="icon"><use href="#icon-trash"></use></svg>Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add table -->
+    <section class="modal" id="modal-table-add" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-table"></use></svg>
+        <span>Add Table</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-table"></use></svg></div>
+        <h2 class="modal-title">Add New Table</h2>
+        <div class="field field--left" data-field="tblSeats">
+          <label for="tbl-seats">Seating Capacity</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-users"></use></svg>
+            <input class="input has-icon" type="text" id="tbl-seats" inputmode="numeric" maxlength="2" placeholder="Enter seating capacity (1-20)" autocomplete="off">
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--primary" id="tbl-add-confirm"><svg class="icon"><use href="#icon-plus"></use></svg>Add Table</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Delete table -->
+    <section class="modal" id="modal-table-delete" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-trash"></use></svg>
+        <span>Delete Table</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-table"></use></svg></div>
+        <h2 class="modal-title" id="td-title">Delete Table?</h2>
+        <p class="modal-text" id="td-text">Are you sure? This action cannot be undone.</p>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="tbl-delete-confirm"><svg class="icon"><use href="#icon-trash"></use></svg>Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm restore -->
+    <section class="modal modal--wide" id="modal-restore" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-restore"></use></svg>
+        <span>Restore Data</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-restore"></use></svg></div>
+        <h2 class="modal-title">Restore this backup?</h2>
+        <p class="modal-text">Your current data will be replaced with the data in this backup. A safety backup of the current data is created first.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-database"></use></svg>Backup file</dt><dd id="rs-name">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-clock"></use></svg>Created</dt><dd id="rs-date">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-receipt"></use></svg>Contents</dt><dd id="rs-contents">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--primary" id="rs-confirm"><svg class="icon"><use href="#icon-restore"></use></svg>Restore</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Restoring (progress) -->
+    <section class="modal" id="modal-restoring" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-restore"></use></svg>
+        <span>Restoring Data</span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-database"></use></svg></div>
+        <h2 class="modal-title">Restoring...</h2>
+        <p class="modal-text">Please keep this page open until the restore is complete.</p>
+        <div class="progress"><span id="rs-progress"></span></div>
+      </div>
+    </section>
+
+    <!-- Restore complete -->
+    <section class="modal" id="modal-restore-done" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-check"></use></svg>
+        <span>Restore Complete</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--success"><svg class="icon"><use href="#icon-shield-check"></use></svg></div>
+        <h2 class="modal-title">Data restored</h2>
+        <p class="modal-text" id="rd-text">Your data was restored.</p>
+        <div class="modal-buttons">
+          <button type="button" class="button button--primary" data-close>OK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ingredient form -->
+    <section class="modal modal--wide" id="modal-ing-form" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-layers"></use></svg>
+        <span id="if-title">Add New Ingredient</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body modal-body--form">
+        <div class="field field--left" data-field="ingName">
+          <label for="if-name">Ingredient Name</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-layers"></use></svg>
+            <input class="input has-icon" type="text" id="if-name" placeholder="e.g. Pork Belly" autocomplete="off" maxlength="40">
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field field--left" data-field="ingCategory">
+          <label for="if-category">Category</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-tag"></use></svg>
+            <select class="select has-icon" id="if-category">
+              <option value="">Select category</option>
+              <option>Meat</option><option>Seafood</option><option>Vegetables</option><option>Side Dishes</option><option>Sauces &amp; Condiments</option><option>Rice &amp; Noodles</option><option>Beverages</option><option>Supplies</option>
+            </select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="field field--left" data-field="ingUnit">
+          <label for="if-unit">Unit of Measurement</label>
+          <div class="input-wrap">
+            <svg class="icon input-icon"><use href="#icon-layers"></use></svg>
+            <select class="select has-icon" id="if-unit">
+              <option value="">Select unit (pcs, kg, L, ...)</option>
+              <option>pcs</option><option>kg</option><option>g</option><option>L</option><option>mL</option><option>packs</option><option>bottles</option><option>cans</option><option>cases</option><option>sacks</option><option>tubs</option><option>servings</option>
+            </select>
+          </div>
+          <p class="field-error"></p>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--primary" id="if-submit"><svg class="icon"><use href="#icon-check"></use></svg><span id="if-submit-text">Add Ingredient</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm add ingredient -->
+    <section class="modal modal--wide" id="modal-ing-add-confirm" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-plus"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-plus"></use></svg></div>
+        <h2 class="modal-title">Add this ingredient?</h2>
+        <p class="modal-text">The Inventory Staff will be able to add it to the inventory.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Ingredient Name</dt><dd id="ia-name">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-tag"></use></svg>Category</dt><dd id="ia-category">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Unit of Measurement</dt><dd id="ia-unit">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" id="ia-back">Back</button>
+          <button type="button" class="button button--primary" id="ia-yes"><svg class="icon"><use href="#icon-check"></use></svg>Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm ingredient changes -->
+    <section class="modal modal--wide" id="modal-ing-edit-confirm" hidden>
+      <div class="modal-bar">
+        <svg class="icon"><use href="#icon-edit"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge"><svg class="icon"><use href="#icon-edit"></use></svg></div>
+        <h2 class="modal-title">Save these changes?</h2>
+        <p class="modal-text">Review the changes to <strong id="ie-name">-</strong> before saving.</p>
+        <div class="change-list" id="ie-changes"></div>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" id="ie-back">Back</button>
+          <button type="button" class="button button--primary" id="ie-yes"><svg class="icon"><use href="#icon-check"></use></svg>Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm delete ingredient -->
+    <section class="modal modal--wide" id="modal-ing-delete" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-trash"></use></svg>
+        <span>Delete Ingredient</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-trash"></use></svg></div>
+        <h2 class="modal-title">Delete this ingredient?</h2>
+        <p class="modal-text">This will remove <strong id="ig-name">-</strong> from the ingredient list. Items already in the inventory are not changed. This action cannot be undone.</p>
+        <dl class="info-list">
+          <div><dt><svg class="icon"><use href="#icon-tag"></use></svg>Category</dt><dd id="ig-category">-</dd></div>
+          <div><dt><svg class="icon"><use href="#icon-layers"></use></svg>Unit of Measurement</dt><dd id="ig-unit">-</dd></div>
+        </dl>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="ig-yes"><svg class="icon"><use href="#icon-trash"></use></svg>Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Log out -->
+    <section class="modal" id="modal-logout" hidden>
+      <div class="modal-bar modal-bar--danger">
+        <svg class="icon"><use href="#icon-logout"></use></svg>
+        <span>Confirmation</span>
+        <button type="button" class="modal-x" data-close aria-label="Close"><svg class="icon"><use href="#icon-close"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-badge modal-badge--danger"><svg class="icon"><use href="#icon-logout"></use></svg></div>
+        <h2 class="modal-title">Log out?</h2>
+        <p class="modal-text">Are you sure you want to sign out?</p>
+        <div class="modal-buttons">
+          <button type="button" class="button button--outline" data-close>Cancel</button>
+          <button type="button" class="button button--danger" id="logout-yes">Log out</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script src="owner.js"></script>
+</body>
+</html>

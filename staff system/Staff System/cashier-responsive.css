@@ -1,0 +1,39 @@
+/* =====================================================
+   UNLTD 199 - Cashier | Responsive
+   (breakpoints match frontdesk: 700 / 600)
+   ===================================================== */
+
+@media (max-width: 700px) {
+  .user-chip span { display: none; }
+  .logout-btn span { display: none; }
+  .logout-btn { padding: 8px 12px; }
+  .clock-pill .ic { display: none; }
+}
+
+@media (max-width: 600px) {
+  .topbar { padding: 0 14px; gap: 10px; }
+  .topbar-left { gap: 10px; }
+  .topbar h1 { font-size: 0.95rem; }
+  .topbar-right { gap: 8px; }
+  .clock-pill { padding: 6px 10px; font-size: 0.8rem; }
+
+  .page { padding: 20px 14px 40px; }
+  .page-title h2 { font-size: 1.15rem; }
+  .card { padding: 18px; }
+
+  .bill-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bill-card { min-height: 120px; padding: 12px 8px; }
+
+  /* Modals become bottom sheets */
+  .overlay { align-items: flex-end; padding: 0; }
+  .modal, .modal.narrow { max-width: none; max-height: 94vh; border-radius: var(--radius) var(--radius) 0 0; }
+  .modal-body { padding: 18px 16px; }
+  .modal-foot { flex-wrap: wrap; padding: 14px 16px 18px; }
+  .modal-foot .btn { flex: 1; }
+  .receipt-wrap { padding: 16px; }
+
+  /* Confirm dialog stays centered */
+  .overlay-top { align-items: center; padding: 20px; }
+  .modal.dialog { max-width: 420px; border-radius: var(--radius); }
+  .dialog-actions { flex-direction: column-reverse; }
+}

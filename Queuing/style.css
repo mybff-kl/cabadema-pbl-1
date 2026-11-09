@@ -1,0 +1,531 @@
+/* =====================================================
+   UNLTD 199 - Queue Kiosk
+   MAIN STYLESHEET
+   -----------------------------------------------------
+   1. Colors and settings (EDIT COLORS HERE)
+   2. Base / page background
+   3. Logo and headings
+   4. Buttons
+   5. Keypad screen
+   6. Card (used by screens 2, 3 and 4)
+   7. Confirm screen
+   8. Queue number screen
+   9. Customer queue view screen
+   10. Toast notification
+   ===================================================== */
+
+
+/* =====================================================
+   1. COLORS AND SETTINGS
+   Change a color here and it updates on every screen.
+   ===================================================== */
+:root {
+  /* Main brand colors */
+  --color-primary: #9b4733;        /* dark red-brown: headings, card headers */
+  --color-button: #b05a3c;         /* orange-brown: main buttons */
+  --color-button-hover: #96472c;   /* main button when hovered */
+
+  /* Backgrounds */
+  --color-page-fallback: #f8ecd8;  /* shows if blurred-bg.png is missing */
+  --color-card: #fef5e4;           /* cream card body */
+  --color-soft-box: #fde8dc;       /* light pink boxes (numbers, wait time) */
+  --color-white: #ffffff;
+
+  /* Text */
+  --color-text-dark: #1a1a1a;
+  --color-text-muted: #777777;
+  --color-accent-brown: #7a3000;   /* clock icon and "Next in Queue" title */
+
+  /* Fonts */
+  --font-main: "Khand", "Segoe UI", Arial, sans-serif;
+
+  /* Sizes and spacing */
+  --radius-small: 8px;
+  --radius-medium: 16px;
+  --space-small: 12px;
+  --space-medium: 24px;
+  --space-large: 40px;
+
+  --shadow-soft: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =====================================================
+   2. BASE / PAGE BACKGROUND
+   ===================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-primary);
+  background-color: var(--color-page-fallback);
+
+  /* BACKGROUND IMAGE: put blurred-bg.png in the same folder as this file */
+  background-image: url("blurred-bg.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  overflow-x: hidden; /* stops sideways scrolling */
+}
+
+/* One full-height screen, content centered */
+.kiosk-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+     padding: 80px var(--space-medium) var(--space-large);
+}
+
+img {
+  max-width: 100%;
+}
+
+
+/* =====================================================
+   3. LOGO AND HEADINGS
+   ===================================================== */
+.logo-area {
+  text-align: center;
+  margin-bottom: var(--space-medium);
+}
+
+/* LOGO IMAGE: put logo.png in the same folder as this file */
+.logo-image {
+  height: 100px;
+  width: auto;
+}
+
+/* Text shown only if the logo image is missing */
+.logo-fallback {
+  display: none;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  line-height: 1;
+}
+
+.logo-fallback small {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-button);
+}
+
+.logo-area.logo-missing .logo-image {
+  display: none;
+}
+
+.logo-area.logo-missing .logo-fallback {
+  display: block;
+}
+
+.screen-title {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: var(--space-medium);
+}
+
+/* Bigger title used on the queue screens */
+.screen-title--large {
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+
+/* Less space under the title (queue view screen) */
+.screen-title--tight {
+  margin-bottom: 8px;
+}
+
+
+/* =====================================================
+   4. BUTTONS
+   ===================================================== */
+.button {
+  font-family: var(--font-main);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  padding: 14px 40px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+/* Filled button (Generate Queue Number, Confirm) */
+.button--primary {
+  background-color: var(--color-button);
+  color: var(--color-white);
+}
+
+.button--primary:hover {
+  background-color: var(--color-button-hover);
+}
+
+/* Outlined button (Cancel) */
+.button--outline {
+  background-color: #f5e6d6;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.button--outline:hover {
+  background-color: #efd6c0;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-large);
+  margin-top: var(--space-medium);
+}
+
+
+/* =====================================================
+   5. KEYPAD SCREEN (main.html)
+   ===================================================== */
+.keypad-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.keypad-display {
+  width: 100%;
+  height: 54px;
+  background-color: var(--color-white);
+  border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: var(--space-medium);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  color: var(--color-text-dark);
+}
+
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.keypad-button {
+  height: 68px;
+  font-family: var(--font-main);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  background-color: var(--color-white);
+  border: none;
+  border-radius: 6px;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+.keypad-button:hover {
+  background-color: #f6e9dc;
+}
+
+.keypad-button:active {
+  transform: scale(0.96);
+}
+
+.keypad-button svg {
+  width: 36px;
+  height: 36px;
+}
+
+.keypad-actions {
+  text-align: center;
+  margin-top: var(--space-large);
+}
+
+
+/* =====================================================
+   6. CARD (screens 2, 3 and 4)
+   A dark header bar on top, cream body below.
+   ===================================================== */
+.card {
+  width: 100%;
+  max-width: 690px;
+  background-color: var(--color-card);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+}
+
+.card-header {
+  min-height: 66px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  padding: 8px var(--space-medium);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.card-body {
+  padding: var(--space-medium);
+  text-align: center;
+}
+
+/* Big number inside a pink rounded box */
+.number-box {
+  background-color: var(--color-soft-box);
+  border-radius: var(--radius-medium);
+  color: var(--color-primary);
+  font-weight: 600;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =====================================================
+   7. CONFIRM SCREEN (confirm.html)
+   ===================================================== */
+.confirm-card .card-body {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+}
+
+.confirm-number {
+  font-size: 9rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-primary);
+}
+
+.confirm-label {
+  font-size: 1.8rem;
+  color: var(--color-primary);
+}
+
+
+/* =====================================================
+   8. QUEUE NUMBER SCREEN (queue-number.html)
+   ===================================================== */
+.queue-number-card .card-body {
+  padding-bottom: var(--space-medium);
+}
+
+.queue-number-text {
+  font-size: 7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin: 20px 0 30px;
+}
+
+.wait-time-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  background-color: var(--color-soft-box);
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-medium);
+}
+
+.wait-time-pill svg {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: var(--color-accent-brown);
+}
+
+.wait-time-pill .divider {
+  width: 1px;
+  align-self: stretch;
+  background-color: #d8b9a8;
+}
+
+.wait-time-value {
+  font-weight: 600;
+}
+
+.photo-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  color: var(--color-primary);
+}
+
+.photo-note svg {
+  width: 40px;
+  height: 40px;
+  color: var(--color-primary);
+}
+
+.countdown-area {
+  text-align: center;
+  margin-top: var(--space-medium);
+  font-size: 1.6rem;
+  color: var(--color-primary);
+}
+
+.countdown-number {
+  display: inline-block;
+  min-width: 148px;
+  margin-top: var(--space-small);
+  padding: 8px 24px;
+  background-color: #d9bba8;
+  border-radius: 6px;
+  font-size: 2.2rem;
+  color: var(--color-text-dark);
+}
+
+
+/* =====================================================
+   9. CUSTOMER QUEUE VIEW (queue-view.html)
+   ===================================================== */
+.title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  margin-bottom: var(--space-medium);
+  color: var(--color-primary);
+}
+
+.title-divider::before,
+.title-divider::after {
+  content: "";
+  width: 90px;
+  height: 2px;
+  background-color: var(--color-primary);
+}
+
+.title-divider svg {
+  width: 84px;
+  height: 52px;
+}
+
+.queue-view-card {
+  max-width: 840px;
+  margin-bottom: var(--space-medium);
+}
+
+.now-serving-number {
+  width: 100%;
+  max-width: 350px;
+  height: 156px;
+  margin: 0 auto var(--space-medium);
+  font-size: 5.5rem;
+}
+
+.now-serving-hint {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  font-family: Arial, sans-serif;
+}
+
+.next-in-queue {
+  width: 100%;
+  max-width: 840px;
+  background-color: var(--color-card);
+  border-radius: var(--radius-medium);
+  padding: var(--space-small) var(--space-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium);
+}
+
+.next-in-queue svg {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  color: var(--color-accent-brown);
+}
+
+.next-in-queue-text {
+  flex: 1;
+}
+
+.next-in-queue-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-accent-brown);
+  line-height: 1.1;
+}
+
+.next-in-queue-hint {
+  font-style: italic;
+  color: var(--color-text-muted);
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+}
+
+.next-number {
+  width: 200px;
+  height: 100px;
+  font-size: 3rem;
+}
+
+/* =====================================================
+   10. TOAST NOTIFICATION (error messages)
+   ===================================================== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 12px 28px;
+  border-radius: var(--radius-small);
+  font-size: 1.3rem;
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 10;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+   /* The logo is already inside the background picture.
+      Hide the page logo but keep its space so the heading stays below it. */
+   .logo-area {
+     visibility: hidden;
+   }

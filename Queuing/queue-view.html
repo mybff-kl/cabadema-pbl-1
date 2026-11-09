@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 - Customer Queue View</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+
+  <!-- SCREEN 4: Customer queue view (Now Serving / Next in Queue) -->
+  <main class="kiosk-screen">
+
+    <div class="logo-area">
+      <img class="logo-image" src="logo.png" alt="UNLTD 199 Samgyupsal Korean Grill House">
+      <div class="logo-fallback">UNLTD 199<small>Samgyupsal Korean Grill House</small></div>
+    </div>
+
+    <h1 class="screen-title screen-title--large screen-title--tight">Customer Queue View</h1>
+
+    <!-- Line with a people icon in the middle -->
+    <div class="title-divider">
+      <svg viewBox="0 0 84 52" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="42" cy="12" r="7"/>
+        <path d="M28 40c0-9 6-15 14-15s14 6 14 15z"/>
+        <circle cx="16" cy="20" r="6"/>
+        <path d="M3 44c0-8 5-13 13-13"/>
+        <circle cx="68" cy="20" r="6"/>
+        <path d="M81 44c0-8-5-13-13-13"/>
+      </svg>
+    </div>
+
+    <!-- NOW SERVING card -->
+    <section class="card queue-view-card">
+      <div class="card-header">
+        <!-- Person icon -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="7" r="4.5"/>
+          <path d="M3 21c0-5 4-8 9-8s9 3 9 8z"/>
+        </svg>
+        <span>Now Serving</span>
+      </div>
+
+      <div class="card-body">
+        <div class="number-box now-serving-number" id="now-serving-number">---</div>
+        <p class="now-serving-hint">Please wait for your number to be called.</p>
+      </div>
+    </section>
+
+    <!-- NEXT IN QUEUE box -->
+    <section class="next-in-queue">
+      <!-- Clock icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+      </svg>
+
+      <div class="next-in-queue-text">
+        <div class="next-in-queue-title">Next in Queue</div>
+        <div class="next-in-queue-hint">Your number will be called next.</div>
+      </div>
+
+      <div class="number-box next-number" id="next-number">---</div>
+    </section>
+
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

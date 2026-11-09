@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNLTD 199 | Tableside Module</title>
+
+  <!-- Google Font (needs internet). If offline, the browser uses a fallback font. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="order.css">
+  <link rel="stylesheet" href="order-responsive.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       ICON LIBRARY
+       Every icon is defined once here and reused with:
+       <svg class="icon"><use href="#icon-name"></use></svg>
+       ===================================================== -->
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-flame" viewBox="6.5 1 11 16"><path fill="currentColor" stroke="none" d="M12 1.5c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-1.7.7-3 1.8-4 .1 1.2.6 2 1.4 2.4C10.5 7.5 10.8 4.2 12 1.5z"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 11.5 12 3l9 8.5M5.5 10v10.5h4.5v-6h4v6h4.5V10"/></symbol>
+    <symbol id="icon-cart" viewBox="0 0 24 24"><path d="M3 4h2.3l2.4 11.5h10.6l2-8.5H6.2"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M3.5 18.5h17M5 18.5a7 7 0 0 1 14 0M12 8.5v-2M10 6.5h4"/></symbol>
+    <symbol id="icon-table" viewBox="0 0 24 24"><path d="M3 9h18M5 9v9.5M19 9v9.5M7 9V6h10v3"/></symbol>
+    <symbol id="icon-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16.5 11a2.5 2.5 0 1 0 0-5M17 14c2.5.2 4 2.2 4 5.5"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></symbol>
+    <symbol id="icon-drink" viewBox="0 0 24 24"><path d="M6.5 8h11l-1.4 12.5H7.9zM6.8 12h10.4M13 8l2-5.5"/></symbol>
+    <symbol id="icon-dessert" viewBox="0 0 24 24"><path d="M7.5 10.5a4.5 4.5 0 0 1 9 0zM7 10.5h10L12 21.5z"/></symbol>
+    <symbol id="icon-sides" viewBox="0 0 24 24"><path d="M3 12h18a9 9 0 0 1-18 0zM8 8c0-1.6 1.2-1.6 1.2-3.2M13 8c0-1.6 1.2-1.6 1.2-3.2"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="icon-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol>
+    <symbol id="icon-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M6.5 15h3.5"/></symbol>
+    <symbol id="icon-cash" viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="11" rx="1.5"/><circle cx="12" cy="12" r="2.6"/></symbol>
+    <symbol id="icon-gcash" viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16M9 9h2v2H9zM13 9h2v2h-2zM9 13h2v2H9zM13 13h2v2h-2z"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5M12 7.8h.01"/></symbol>
+    <symbol id="icon-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor" stroke="none"/><path d="m7 12.5 3.2 3.2L17 8.8" stroke="#ffffff" stroke-width="2.4"/></symbol>
+  </svg>
+
+  <div class="app">
+
+    <!-- =====================================================
+         TOP BAR: logo, table info, remaining time
+         ===================================================== -->
+    <header class="topbar">
+      <div class="brand">
+        <svg class="icon brand-flame"><use href="#icon-flame"></use></svg>
+        <div class="brand-text">
+          <div class="brand-name">UNLTD <span>199</span></div>
+          <div class="brand-sub">Samgyupsal Korean Grill House</div>
+        </div>
+      </div>
+
+      <div class="topbar-info">
+        <span class="info-item">
+          <svg class="icon"><use href="#icon-table"></use></svg>
+          Table no. <span id="table-number">1</span>
+        </span>
+        <span class="info-item">
+          <svg class="icon"><use href="#icon-people"></use></svg>
+          <span id="pax-count">5</span> pax
+        </span>
+        <span class="info-divider"></span>
+        <span class="info-item info-item--timer">
+          <svg class="icon icon--large"><use href="#icon-clock"></use></svg>
+          <span class="timer-text">
+            <strong id="time-remaining">2:00:00</strong>
+            <small>Remaining Time</small>
+          </span>
+        </span>
+      </div>
+    </header>
+
+    <div class="app-body">
+
+      <!-- =====================================================
+           SIDE MENU (data-nav is read by order.js)
+           ===================================================== -->
+      <nav class="sidebar" aria-label="Main menu">
+        <button class="nav-button nav-button--active" data-nav="menu">
+          <svg class="icon"><use href="#icon-home"></use></svg>
+          <span>Menu</span>
+        </button>
+        <button class="nav-button" data-nav="orders">
+          <svg class="icon"><use href="#icon-cart"></use></svg>
+          <span>My Orders</span>
+        </button>
+        <button class="nav-button" data-nav="assistance">
+          <svg class="icon"><use href="#icon-bell"></use></svg>
+          <span>Assistance</span>
+        </button>
+      </nav>
+
+      <main class="content">
+
+        <!-- =================================================
+             VIEW 1: MENU (Customer Order Screen)
+             ================================================= -->
+        <section class="view" id="view-menu">
+          <div class="menu-toolbar">
+            <div class="category-tabs" id="category-tabs">
+              <button class="category-tab category-tab--active" data-category="All">
+                <svg class="icon"><use href="#icon-grid"></use></svg> All
+              </button>
+              <button class="category-tab" data-category="Drinks">
+                <svg class="icon"><use href="#icon-drink"></use></svg> Drinks
+              </button>
+              <button class="category-tab" data-category="Desserts">
+                <svg class="icon"><use href="#icon-dessert"></use></svg> Desserts
+              </button>
+              <button class="category-tab" data-category="Sides">
+                <svg class="icon"><use href="#icon-sides"></use></svg> Sides
+              </button>
+            </div>
+
+            <label class="search-box">
+              <svg class="icon"><use href="#icon-search"></use></svg>
+              <input type="search" id="search-input" placeholder="Search menu item..." autocomplete="off">
+            </label>
+          </div>
+
+          <!-- The text is set by order.js (time over / bill out requested) -->
+          <p class="closed-banner" id="closed-banner" hidden></p>
+
+          <div class="menu-grid" id="menu-grid"></div>
+          <p class="empty-message" id="menu-empty" hidden>No menu items found.</p>
+        </section>
+
+
+        <!-- =================================================
+             VIEW 2: MY ORDERS
+             ================================================= -->
+        <section class="view" id="view-orders" hidden>
+          <div class="panel">
+            <h2 class="panel-title">
+              <svg class="icon icon--large"><use href="#icon-cart"></use></svg>
+              My Orders
+            </h2>
+
+            <div class="orders-row orders-row--head">
+              <span>Item</span>
+              <span class="cell-center">Qty</span>
+              <span>Status</span>
+              <span>Price</span>
+              <span>Total</span>
+            </div>
+
+            <div id="orders-list"></div>
+            <p class="empty-message" id="orders-empty" hidden>You have not ordered anything yet.</p>
+
+            <div class="total-box">
+              <span>Total</span>
+              <span id="orders-total">₱0</span>
+            </div>
+
+            <div class="panel-actions">
+              <button class="button button--primary" id="bill-out-button">Bill Out</button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- =================================================
+             VIEW 3: BILL OUT (Confirm Billing Out)
+             ================================================= -->
+        <section class="view" id="view-bill" hidden>
+          <div class="panel">
+            <div class="bill-heading">
+              <svg class="icon icon--large"><use href="#icon-receipt"></use></svg>
+              <div>
+                <!-- Text changes to "Order Details" after bill out is requested (see order.js) -->
+                <h2 class="panel-title panel-title--small" id="bill-title">Confirm Billing Out</h2>
+                <p class="panel-subtitle" id="bill-subtitle">Please review the details before proceeding.</p>
+              </div>
+            </div>
+
+            <div class="bill-layout">
+
+              <!-- Left: order summary -->
+              <div class="bill-box">
+                <h3 class="box-title">Order Summary</h3>
+
+                <div class="bill-row bill-row--head">
+                  <span>Item</span>
+                  <span class="cell-center">Qty</span>
+                  <span>Price</span>
+                </div>
+                <div id="bill-list"></div>
+
+                <div class="total-box total-box--plain">
+                  <span>Total</span>
+                  <span id="bill-total">₱0</span>
+                </div>
+              </div>
+
+              <!-- Right: payment method -->
+              <div class="bill-box">
+                <h3 class="box-title">
+                  <svg class="icon"><use href="#icon-card"></use></svg>
+                  Payment Method
+                </h3>
+
+                <!-- Before bill out: customer picks Cash or GCash -->
+                <div id="payment-choose">
+                  <div class="payment-options">
+                    <button class="payment-option payment-option--cash payment-option--selected" data-payment="cash" aria-pressed="true">
+                      <svg class="icon"><use href="#icon-cash"></use></svg> Cash
+                    </button>
+                    <button class="payment-option payment-option--gcash" data-payment="gcash" aria-pressed="false">
+                      <svg class="icon"><use href="#icon-gcash"></use></svg> GCash
+                    </button>
+                  </div>
+                </div>
+
+                <!-- After bill out: shows the chosen method and the status -->
+                <div class="request-status" id="payment-status" hidden>
+                  <div class="request-status-row">
+                    <span>Method</span>
+                    <strong id="status-method">Cash</strong>
+                  </div>
+                </div>
+
+                <div class="payment-note">
+                  <svg class="icon"><use href="#icon-info"></use></svg>
+                  <p id="payment-note-text"></p>
+                </div>
+
+                <button class="button button--primary button--full" id="proceed-button">Request Bill Out</button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+
+  <!-- =====================================================
+       POP-UPS
+       ===================================================== -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+
+    <!-- Select item: choose quantity -->
+    <section class="modal modal--item" id="modal-item" role="dialog" aria-modal="true" aria-labelledby="item-modal-name" hidden>
+      <div class="modal-body">
+        <div class="item-preview">
+          <div id="item-modal-image"></div>
+          <p class="item-preview-name" id="item-modal-name"></p>
+          <p class="item-preview-price" id="item-modal-price"></p>
+        </div>
+
+        <div class="quantity-row">
+          <span>Quantity:</span>
+          <div class="stepper">
+            <button type="button" id="quantity-minus" aria-label="Decrease quantity">
+              <svg class="icon"><use href="#icon-minus"></use></svg>
+            </button>
+            <input type="number" id="quantity-input" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+            <button type="button" id="quantity-plus" aria-label="Increase quantity">
+              <svg class="icon"><use href="#icon-plus"></use></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button class="button button--outline" id="item-cancel-button">Cancel</button>
+          <button class="button button--primary" id="item-confirm-button">Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Time warning -->
+    <section class="modal" id="modal-time-warning" role="dialog" aria-modal="true" aria-labelledby="time-warning-title" hidden>
+      <div class="modal-bar"></div>
+      <div class="modal-body modal-body--center">
+        <svg class="icon icon--huge icon--alert"><use href="#icon-clock"></use></svg>
+        <h2 class="modal-title" id="time-warning-title">Your time is almost up</h2>
+        <p class="modal-text">You only have about <strong id="time-warning-minutes">10 minutes</strong> left. Please place your last orders now. After that, ordering will be closed.</p>
+        <div class="modal-buttons">
+          <button class="button button--primary" id="time-warning-ok-button">OK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Time up -->
+    <section class="modal" id="modal-time-up" role="dialog" aria-modal="true" aria-labelledby="time-up-title" hidden>
+      <div class="modal-bar"></div>
+      <div class="modal-body modal-body--center">
+        <svg class="icon icon--huge icon--alert icon--alert-over"><use href="#icon-clock"></use></svg>
+        <h2 class="modal-title" id="time-up-title">Time's up!</h2>
+        <p class="modal-text">Your dining time has ended, so you can no longer place orders. Please bill out or ask our staff for help.</p>
+        <div class="modal-buttons">
+          <button class="button button--outline" id="time-up-ok-button">OK</button>
+          <button class="button button--primary" id="time-up-bill-button">Bill Out</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Request assistance: ask -->
+    <section class="modal" id="modal-assist-ask" role="dialog" aria-modal="true" aria-labelledby="assist-ask-title" hidden>
+      <div class="modal-bar"></div>
+      <div class="modal-body modal-body--center">
+        <svg class="icon icon--huge"><use href="#icon-bell"></use></svg>
+        <h2 class="modal-title" id="assist-ask-title">Request Assistance</h2>
+        <p class="modal-text">Do you need assistance?</p>
+        <div class="modal-buttons">
+          <button class="button button--outline" id="assist-no-button">No, I'm Good</button>
+          <button class="button button--primary" id="assist-yes-button">Yes, Request Assistance</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Request assistance: notification -->
+    <section class="modal" id="modal-assist-done" role="dialog" aria-modal="true" aria-labelledby="assist-done-title" hidden>
+      <div class="modal-bar"></div>
+      <div class="modal-body modal-body--center">
+        <svg class="icon icon--huge"><use href="#icon-bell"></use></svg>
+        <h2 class="modal-title" id="assist-done-title">Request Assistance</h2>
+        <p class="modal-text">We've notified our staff. Someone will be with you shortly.</p>
+        <div class="modal-buttons">
+          <button class="button button--primary" id="assist-ok-button">OK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirm payment method -->
+    <section class="modal" id="modal-pay-confirm" role="dialog" aria-modal="true" aria-labelledby="pay-confirm-title" hidden>
+      <div class="modal-bar"></div>
+      <div class="modal-body modal-body--center">
+        <svg class="icon icon--huge"><use href="#icon-check-circle"></use></svg>
+        <h2 class="modal-title" id="pay-confirm-title">Confirm Payment Method?</h2>
+        <p class="modal-text">Are you sure you want to use <strong id="pay-confirm-method">Cash</strong> as your payment method?</p>
+        <div class="modal-buttons">
+          <button class="button button--outline" id="pay-cancel-button">Cancel</button>
+          <button class="button button--primary" id="pay-confirm-button">Confirm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bill out requested (NOT payment complete yet: the cashier still has to come to the table) -->
+    <section class="modal" id="modal-thanks" role="dialog" aria-modal="true" aria-labelledby="thanks-title" hidden>
+      <div class="modal-bar"></div>
+      <div class="modal-body modal-body--center">
+        <svg class="icon icon--huge"><use href="#icon-receipt"></use></svg>
+        <h2 class="modal-title" id="thanks-title">Bill Out Requested</h2>
+        <p class="modal-text">
+          We've sent your bill out request to the cashier.
+          Total: <strong id="bill-requested-total">₱0</strong> via <strong id="bill-requested-method">Cash</strong>.
+          Please stay at your table. The cashier will be with you shortly.
+        </p>
+        <div class="modal-buttons">
+          <button class="button button--primary" id="bill-requested-ok-button">OK</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Toast message -->
+  <div class="toast" id="toast"></div>
+
+  <script src="order.js"></script>
+</body>
+</html>
